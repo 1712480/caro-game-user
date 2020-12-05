@@ -1,11 +1,12 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
 import { Card, CardTitle, CardBody, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-import css from './css.module.scss';
+import css from '../index.module.scss';
 
-const Login = () => {
+const SignUp = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -31,7 +32,7 @@ const Login = () => {
   return (
     <Card className={css.card}>
       <CardTitle className={css.title}>
-        Login
+        Sign Up
       </CardTitle>
       <CardBody>
         <Form onSubmit={formik.handleSubmit}>
@@ -56,12 +57,12 @@ const Login = () => {
         </Form>
         <hr />
         <Label className={css.create}>
-          Create a new account:
-          <a className={css.link} href="/login"> Sign up</a>
+          Already have an account?
+          <a className={css.link} href="/"> Log in</a>
         </Label>
       </CardBody>
     </Card>
   );
 };
 
-export default Login;
+export default SignUp;
