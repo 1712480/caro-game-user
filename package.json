@@ -10,11 +10,13 @@
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "bootstrap": "^4.5.3",
+    "formik": "^2.2.5",
     "next": "10.0.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "reactstrap": "^8.7.1",
-    "sass": "^1.30.0"
+    "sass": "^1.30.0",
+    "yup": "^0.32.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -33,6 +35,9 @@
     }
   },
   "lint-staged": {
-    "*.js": ["./node_modules/.bin/eslint — fix", "git add"]
-    }
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
 }

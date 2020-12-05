@@ -1,0 +1,34 @@
+.error {
+  color: red;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.title {
+  display: flex;
+  margin: auto;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.card {
+  width: 400px;
+  margin: auto;
+  padding: 20px;
+}
+
+.create {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+
+  .link {
+    text-decoration: none;
+  }
+}
