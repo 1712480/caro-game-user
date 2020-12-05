@@ -1,0 +1,13 @@
+.nav {
+  height: 80px;
+  background-color: #3b3b3b;
+}
+
+.link {
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+  }
+}
