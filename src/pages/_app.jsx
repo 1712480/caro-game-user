@@ -1,6 +1,8 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+
 import NavBar from '../components/NavBar';
 
 import { store } from '../redux/store';
@@ -10,6 +12,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import css from './_app.module.scss';
 
 toast.configure();
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 const MyApp = ({ Component, pageProps }) => (
   <Provider store={store}>
     <div className={css.container}>
