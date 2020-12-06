@@ -1,0 +1,20 @@
+.container {
+  right: 5vw;
+  bottom: 15vh;
+  position: fixed;
+  width: 200px;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  &:focus, &:active, &:hover {
+
+  }
+}
+
+.collapse {
+  max-height: 50vh;
+  overflow: auto;
+}
