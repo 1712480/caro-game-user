@@ -9,6 +9,7 @@
   margin: auto;
   font-size: 2rem;
   font-weight: bold;
+  justify-content: center;
 }
 
 .button {
@@ -30,4 +31,9 @@
   .link {
     text-decoration: none;
   }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
 }

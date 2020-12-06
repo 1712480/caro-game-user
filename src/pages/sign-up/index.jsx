@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
-import { Card, CardTitle, CardBody, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import {
+  Card,
+  CardTitle,
+  CardBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Spinner,
+} from 'reactstrap';
+import { API_HOST, API_END_POINT } from '../../utils/constant';
 
 import css from '../index.module.scss';
 
 const SignUp = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -22,19 +39,34 @@ const SignUp = () => {
         .required('Password cannot be empty'),
       name: Yup.string(),
     }),
-    onSubmit: (value) => {
-      // eslint-disable-next-line no-console
-      console.log(value);
+    onSubmit: async (value) => {
+      setIsLoading(true);
+      axios.post(API_HOST + API_END_POINT.USER_CREATE, {
+        username: value.email,
+        password: value.password,
+      }, {
+        withCredentials: true,
+      })
+        .then((res) => {
+          if (res.status === 201) {
+            toast.success('Sign Up success!');
+            router.push('/');
+          }
+        })
+        .catch((error) => {
+          toast.error(error.message ? error.message : 'Sign Up failed, please try again later');
+        })
+        .finally(() => setIsLoading(false));
     },
     validateOnChange: false,
   });
 
   return (
     <Card className={css.card}>
-      <CardTitle className={css.title}>
-        Sign Up
-      </CardTitle>
       <CardBody>
+        <CardTitle className={css.title}>
+          Sign Up
+        </CardTitle>
         <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <Label>Email:</Label>
@@ -53,7 +85,9 @@ const SignUp = () => {
             <Input id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
           </FormGroup>
 
-          <Button type="submit" className={css.button} color="primary">Submit</Button>
+          <Button type="submit" className={css.button} color="primary">
+            {isLoading ? <Spinner color="light" className={css.spinner} /> : 'OK'}
+          </Button>
         </Form>
         <hr />
         <Label className={css.create}>
