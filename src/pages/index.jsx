@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import axios from 'axios';
@@ -7,16 +7,22 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import { Card, CardTitle, CardBody, Form, FormGroup, Label, Input, Button, Spinner } from 'reactstrap';
-import { login } from '../redux/userSlice';
+import { login, selectUser } from '../redux/userSlice';
 
 import css from './index.module.scss';
 import { API_END_POINT, API_HOST } from '../utils/constant';
 
 const Login = () => {
+  const [user] = useState(useSelector(selectUser));
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (user) {
+      router.push('/home');
+    }
+  }, [user]);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -40,7 +46,7 @@ const Login = () => {
           if (res.status === 200) {
             dispatch(login(res.data));
             toast.success('Login success!');
-            router.push('/');
+            router.push('/home');
           }
         })
         .catch(() => {
