@@ -25,6 +25,7 @@
     "socket.io-client": "^3.0.3",
     "yup": "^0.32.1"
   },
+  "proxy": "https://caro-game-backend.herokuapp.com/",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.15.0",
