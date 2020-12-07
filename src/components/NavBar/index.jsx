@@ -6,7 +6,8 @@ import { selectUser, logout } from '../../redux/userSlice';
 
 import css from './css.module.scss';
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const { socket } = props;
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 

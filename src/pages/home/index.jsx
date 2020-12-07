@@ -4,14 +4,12 @@ import { useRouter } from 'next/router';
 
 import { toast } from 'react-toastify';
 
-import socketIOClient from 'socket.io-client';
-
 import { selectUser } from '../../redux/userSlice';
 import OnlineUser from './OnlineUser';
 
-const socket = socketIOClient('http://localhost:3000');
+const Index = (props) => {
+  const { socket } = props;
 
-const Index = () => {
   const [user] = useState(useSelector(selectUser));
 
   const [refresh, setRefresh] = useState(false);
