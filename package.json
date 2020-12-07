@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start"
   },
@@ -22,8 +22,10 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "sass": "^1.30.0",
+    "socket.io-client": "^3.0.3",
     "yup": "^0.32.1"
   },
+  "proxy": "https://caro-game-backend.herokuapp.com/",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.15.0",

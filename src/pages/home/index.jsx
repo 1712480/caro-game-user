@@ -3,23 +3,35 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { toast } from 'react-toastify';
+
 import { selectUser } from '../../redux/userSlice';
 import OnlineUser from './OnlineUser';
 
-const Index = () => {
+const Index = (props) => {
+  const { socket } = props;
+
   const [user] = useState(useSelector(selectUser));
+
+  const [refresh, setRefresh] = useState(false);
+
   const router = useRouter();
+
+  const fireRefresh = () => {
+    setRefresh(!refresh);
+  };
 
   useEffect(() => {
     if (!user) {
       toast.error('Please login with your account first.');
       router.push('/');
+    } else {
+      socket.emit('client-login', user);
     }
-  }, [user]);
+  }, [user, refresh]);
 
   return user ? (
     <div>
-      <OnlineUser />
+      <OnlineUser user={user} socket={socket} refresh={fireRefresh} />
     </div>
   ) : null;
 };

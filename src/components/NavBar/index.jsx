@@ -6,15 +6,21 @@ import { selectUser, logout } from '../../redux/userSlice';
 
 import css from './css.module.scss';
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const { socket } = props;
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const handleLogout = () => {
+    socket.emit('client-logout', user);
+    dispatch(logout());
+  };
 
   return (
     <Nav className={css.nav}>
       <NavbarBrand className={css.link} href="/">CARO</NavbarBrand>
       {!user ? <NavLink className={css.link} href="/sign-up">Sign Up</NavLink>
-        : <NavLink className={css.link} onClick={() => dispatch(logout())}>Log out</NavLink>}
+        : <NavLink className={css.link} onClick={handleLogout}>Log out</NavLink>}
     </Nav>
   );
 };
