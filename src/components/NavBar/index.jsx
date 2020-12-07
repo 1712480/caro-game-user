@@ -11,6 +11,7 @@ const NavBar = () => {
   const user = useSelector(selectUser);
 
   const handleLogout = () => {
+    socket.emit('client-logout', user);
     dispatch(logout());
   };
 

@@ -13,20 +13,27 @@ const socket = socketIOClient('http://localhost:3000');
 
 const Index = () => {
   const [user] = useState(useSelector(selectUser));
+
+  const [refresh, setRefresh] = useState(false);
+
   const router = useRouter();
+
+  const fireRefresh = () => {
+    setRefresh(!refresh);
+  };
 
   useEffect(() => {
     if (!user) {
       toast.error('Please login with your account first.');
       router.push('/');
+    } else {
+      socket.emit('client-login', user);
     }
-    console.log(user);
-    socket.emit('client-connect', user);
-  }, [user]);
+  }, [user, refresh]);
 
   return user ? (
     <div>
-      <OnlineUser user={user} socket={socket} />
+      <OnlineUser user={user} socket={socket} refresh={fireRefresh} />
     </div>
   ) : null;
 };

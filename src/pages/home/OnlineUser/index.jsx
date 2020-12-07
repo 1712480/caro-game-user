@@ -5,15 +5,20 @@ import { Button, UncontrolledCollapse, ListGroup, ListGroupItem, Card } from 're
 import css from './css.module.scss';
 
 const OnlineUser = (props) => {
-  const { user, socket } = props;
+  const { user, socket, refresh } = props;
 
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
-    socket.on('online-users', (response) => {
-      setOnlineUsers(response);
-    });
-  }, [onlineUsers]);
+    setTimeout(() => {
+      refresh();
+    }, 3000);
+  });
+
+  socket.on('online-users', (response) => {
+    // Should exclude myself here
+    setOnlineUsers(response);
+  });
 
   return (
     <div className={css.container}>
@@ -22,22 +27,6 @@ const OnlineUser = (props) => {
         <Card>
           <ListGroup>
             {onlineUsers.map((item, index) => (<ListGroupItem key={index}>{item}</ListGroupItem>))}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
-            {/* <ListGroupItem>Item</ListGroupItem> */}
             {/* <ListGroupItem>Item</ListGroupItem> */}
           </ListGroup>
         </Card>
