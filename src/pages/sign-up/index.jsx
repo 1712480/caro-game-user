@@ -44,6 +44,7 @@ const SignUp = () => {
       axios.post(API_HOST + API_END_POINT.USER_CREATE, {
         username: value.email,
         password: value.password,
+        name: value.name,
       }, {
         withCredentials: true,
       })
