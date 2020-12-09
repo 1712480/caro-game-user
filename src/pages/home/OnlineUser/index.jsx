@@ -6,7 +6,6 @@ import css from './css.module.scss';
 
 const OnlineUser = (props) => {
   const { user, socket, refresh } = props;
-
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
@@ -14,7 +13,6 @@ const OnlineUser = (props) => {
       refresh();
     }, 3000);
   });
-
   socket.on('online-users', (response) => {
     // Should exclude myself here
     setOnlineUsers(response);
@@ -26,7 +24,11 @@ const OnlineUser = (props) => {
       <UncontrolledCollapse toggler="#toggle" className={css.collapse}>
         <Card>
           <ListGroup>
-            {onlineUsers.map((item, index) => (<ListGroupItem key={index}>{item}</ListGroupItem>))}
+            {
+              onlineUsers.map((item, index) => (
+                <ListGroupItem key={index} value={item.email}>{item.fullName}</ListGroupItem>
+              ))
+            }
             {/* <ListGroupItem>Item</ListGroupItem> */}
           </ListGroup>
         </Card>

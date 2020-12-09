@@ -9,13 +9,9 @@ import OnlineUser from './OnlineUser';
 
 const Index = (props) => {
   const { socket } = props;
-
   const [user] = useState(useSelector(selectUser));
-
   const [refresh, setRefresh] = useState(false);
-
   const router = useRouter();
-
   const fireRefresh = () => {
     setRefresh(!refresh);
   };

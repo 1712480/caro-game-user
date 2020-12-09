@@ -37,13 +37,14 @@ const SignUp = () => {
       password: Yup.string()
         .min(6, 'Minimum length is 6')
         .required('Password cannot be empty'),
-      name: Yup.string(),
+      name: Yup.string().required('Name cannot be empty'),
     }),
     onSubmit: async (value) => {
       setIsLoading(true);
       axios.post(API_HOST + API_END_POINT.USER_CREATE, {
         username: value.email,
         password: value.password,
+        name: value.name,
       }, {
         withCredentials: true,
       })
@@ -83,6 +84,7 @@ const SignUp = () => {
           <FormGroup>
             <Label>Name:</Label>
             <Input id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
+            {formik.errors.name && <Label className={css.error}>{`* ${formik.errors.name}`}</Label>}
           </FormGroup>
 
           <Button type="submit" className={css.button} color="primary">
