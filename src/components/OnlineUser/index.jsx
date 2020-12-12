@@ -5,7 +5,10 @@ import { Button, UncontrolledCollapse, ListGroup, ListGroupItem, Card } from 're
 import css from './css.module.scss';
 
 const OnlineUser = (props) => {
-  const { user, socket, refresh } = props;
+  const {
+    socket,
+    refresh,
+  } = props;
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
@@ -25,11 +28,14 @@ const OnlineUser = (props) => {
         <Card>
           <ListGroup>
             {
-              onlineUsers.map((item, index) => (
-                <ListGroupItem key={index} value={item.email}>{item.fullName}</ListGroupItem>
+              onlineUsers.map((item) => (
+                <ListGroupItem
+                  key={item.email}
+                >
+                  {item.fullName || item.email}
+                </ListGroupItem>
               ))
             }
-            {/* <ListGroupItem>Item</ListGroupItem> */}
           </ListGroup>
         </Card>
       </UncontrolledCollapse>

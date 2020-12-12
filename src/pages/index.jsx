@@ -39,8 +39,6 @@ const Login = () => {
       axios.post(API_HOST + API_END_POINT.USER_LOGIN, {
         username: value.email,
         password: value.password,
-      }, {
-        withCredentials: true,
       })
         .then((res) => {
           if (res.status === 200) {

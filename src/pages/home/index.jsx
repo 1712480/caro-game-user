@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
 import { selectUser } from '../../redux/userSlice';
-import OnlineUser from './OnlineUser';
+import OnlineUser from '../../components/OnlineUser';
 
 const Index = (props) => {
   const { socket } = props;
