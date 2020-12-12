@@ -1,0 +1,31 @@
+.container {
+  padding: 1rem;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  width: 100%;
+  padding: 0;
+}
+
+.plus {
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 100px;
+
+  &:hover {
+    top: -4px;
+    background-color: #a3e594;
+    box-shadow: 0 4px 8px rgba(38, 38, 38, 0.2);
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+}

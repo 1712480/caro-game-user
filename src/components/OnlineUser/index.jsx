@@ -16,6 +16,7 @@ const OnlineUser = (props) => {
       refresh();
     }, 3000);
   });
+
   socket.on('online-users', (response) => {
     // Should exclude myself here
     setOnlineUsers(response);
