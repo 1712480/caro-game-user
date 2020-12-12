@@ -1,15 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Board from '../../components/match/board';
+import styles from './styles.module.scss';
+import EndGame from '../../components/match/endGame';
 
-const Match = (props) => {
-  const matchMap = useSelector((state) => state.match.mapMatch);
-  console.log(matchMap);
-  return (
-    <div>
-      <Board />
-    </div>
-  );
-};
+const Match = (props) => (
+  <div className={styles.matchWrapper}>
+    <Board />
+    <EndGame />
+  </div>
+);
 
 export default Match;
