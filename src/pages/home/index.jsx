@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -20,41 +21,55 @@ const mockData = [
 ];
 
 const Home = (props) => {
-  const { socket, matchList } = props;
-  const [user] = useState(useSelector(selectUser));
+  const { socket } = props;
+  const [currentUser] = useState(useSelector(selectUser));
   const [refresh, setRefresh] = useState(false);
+  const [rooms, setRooms] = useState(mockData);
   const router = useRouter();
+
   const fireRefresh = () => {
     setRefresh(!refresh);
   };
 
   useEffect(() => {
-    if (!user) {
+    if (!currentUser) {
       toast.error('Please login with your account first.');
       router.push('/');
     } else {
-      socket.emit('client-login', user);
+      socket.emit('client-login', currentUser);
     }
-  }, [user, refresh]);
+  }, [currentUser, refresh]);
 
-  const renderCardList = matchList && matchList.map((match) => (
-    <MatchCard {...match} key={match.roomId} />));
+  const createNewRoom = () => {
+    const { user } = currentUser;
+    const name = user.fullName ? user.fullName : user.email;
 
-  return user ? (
+    setRooms(rooms.concat({
+      x: name,
+      y: null,
+      roomName: `${name}'s room`,
+      roomId: uuid(),
+    }));
+  };
+
+  const handleGoToRoom = (roomId) => {
+    router.push(`/match/${roomId}`);
+  };
+
+  const renderCardList = rooms && rooms.map((room) => (
+    <MatchCard {...room} key={room.roomId} handleOnClick={() => handleGoToRoom(room.roomId)} />));
+
+  return currentUser ? (
     <Container className={css.container}>
       <Container className={css.grid}>
-        <Card className={css.plus}>
+        <Card className={css.plus} onClick={createNewRoom}>
           <img src="/plus.svg" alt="plus" />
         </Card>
         {renderCardList}
       </Container>
-      <OnlineUser user={user} socket={socket} refresh={fireRefresh} />
+      <OnlineUser user={currentUser} socket={socket} refresh={fireRefresh} />
     </Container>
   ) : null;
 };
-
-export const getStaticProps = async () => ({
-  props: { matchList: mockData },
-});
 
 export default Home;

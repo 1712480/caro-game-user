@@ -3,8 +3,8 @@ import { Card, CardTitle } from 'reactstrap';
 
 import css from './css.module.scss';
 
-const MatchCard = ({ roomId, roomName, x, y }) => (
-  <Card className={css.card}>
+const MatchCard = ({ roomId, roomName, x, y, handleOnClick }) => (
+  <Card className={css.card} onClick={handleOnClick}>
     <CardTitle className={css.title}>
       {roomName || roomId}
     </CardTitle>
