@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Square from '../ square';
+import styles from './styles.module.scss';
 
 const RenderBoard = (data) => {
   const Component = data.map((record, indexX) => {
@@ -13,7 +14,7 @@ const RenderBoard = (data) => {
       />
     ));
     // eslint-disable-next-line react/no-array-index-key
-    return <div key={indexX}>{recordI}</div>;
+    return <div key={indexX} className={styles.row}>{recordI}</div>;
   });
   return Component;
 };
@@ -23,7 +24,7 @@ function Board(props) {
   const match = RenderBoard(mapMatch);
   // const a = [];
   return (
-    <div>{match}</div>
+    <div className={styles.boardWrapper} style={{ lineHeight: 0 }}>{match}</div>
   );
 }
 

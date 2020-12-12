@@ -5,3 +5,5 @@ export const API_END_POINT = {
   USER_CREATE: 'users/register',
   USER_LOGIN: 'users/login',
 };
+
+export const maxLength = 15;
