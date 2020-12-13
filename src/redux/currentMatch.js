@@ -4,15 +4,17 @@ import { checkEndGame } from '../utils/checkEndGame';
 
 const generateMap = (length) => Array(length).fill(Array(length).fill(0));
 
+const init = {
+  mapMatch: generateMap(maxLength),
+  isTurnX: true,
+  success: true,
+  isEndGame: false,
+};
+
 // add reducer exit game
 export const currentMatchSlice = createSlice({
   name: 'currentMatch',
-  initialState: {
-    mapMatch: generateMap(maxLength),
-    isTurnX: true,
-    success: true,
-    isEndGame: false,
-  },
+  initialState: init,
   reducers: {
     exeMove: (state, action) => {
       const { x, y } = action.payload;
@@ -47,9 +49,13 @@ export const currentMatchSlice = createSlice({
       isTurnX: true,
       isEndGame: false,
     }),
+    restartGame: (state) => ({
+      ...state,
+      ...init,
+    }),
   },
 });
 
-export const { exeMove, newGame } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;

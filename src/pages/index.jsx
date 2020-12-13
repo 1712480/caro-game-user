@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -81,7 +82,7 @@ const Login = () => {
         <hr />
         <Label className={css.create}>
           Create a new account?
-          <a className={css.link} href="/sign-up"> Sign up</a>
+          <Link className={css.link} href="/sign-up"> Sign up</Link>
         </Label>
       </CardBody>
     </Card>
