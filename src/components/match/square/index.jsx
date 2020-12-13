@@ -13,20 +13,13 @@ function Square({ x, y, value }) {
     }
   };
 
-  let square = <button className={styles.btn} type="button" onClick={clickBtn}>{' '}</button>;
-
-  if (value === 1) {
-    square = <button style={{ color: 'red' }} className={styles.btn} type="button" onClick={clickBtn}>X</button>;
+  switch (value) {
+  case 1:
+    return <button style={{ color: 'red' }} className={styles.btn} type="button" onClick={clickBtn}>X</button>;
+  case 2:
+    return <button style={{ color: 'green' }} className={styles.btn} type="button" onClick={clickBtn}>O</button>;
+  default:
+    return <button className={styles.btn} type="button" onClick={clickBtn}>{' '}</button>;
   }
-  if (value === 2) {
-    square = <button style={{ color: 'green' }} className={styles.btn} type="button" onClick={clickBtn}>O</button>;
-  }
-
-  return (
-    <>
-      { square }
-    </>
-  );
 }
-
 export default Square;

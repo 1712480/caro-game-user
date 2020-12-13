@@ -16,7 +16,6 @@ const EndGame = () => {
         <ModalHeader>MÀY THUA RỒI!</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={onNewGame}>New Game</Button>
-          {' '}
           <Button color="secondary">Exit</Button>
         </ModalFooter>
       </Modal>
