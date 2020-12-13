@@ -7,14 +7,14 @@ import userReducer from './userSlice';
 import currentMatchReducer from './currentMatch';
 
 const reducers = combineReducers({
-  user: userReducer,
+  currentUser: userReducer,
   match: currentMatchReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['user'],
+  whiteList: ['currentUser'],
   blacklist: ['match'],
 };
 

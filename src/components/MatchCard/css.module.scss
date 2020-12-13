@@ -1,0 +1,33 @@
+.card {
+  top: 0;
+  padding: 1rem;
+  display: flex;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  justify-content: center;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    top: -4px;
+    background-color: white;
+    border: 1px solid #cccccc;
+    box-shadow: 0 4px 8px rgba(38, 38, 38, 0.2);
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  max-height: 54px;
+  overflow: hidden;
+  font-weight: bold;
+  text-align: center;
+}
+
+.text {
+  padding: 0;
+  margin: 1rem 0 0;
+  text-wrap: normal;
+}

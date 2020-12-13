@@ -2,10 +2,9 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { Provider } from 'react-redux';
 import axios from 'axios';
-
 import socketIOClient from 'socket.io-client';
-import NavBar from '../components/NavBar';
 
+import NavBar from '../components/NavBar';
 import { store } from '../redux/store';
 
 import 'react-toastify/dist/ReactToastify.css';
