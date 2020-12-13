@@ -1,8 +1,9 @@
 import React from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
-import { Navbar as Nav, NavbarBrand, NavLink } from 'reactstrap';
+import { Navbar as Nav, NavLink } from 'reactstrap';
 import { selectUser, logout } from '../../redux/userSlice';
 
 import css from './css.module.scss';
@@ -25,7 +26,7 @@ const NavBar = (props) => {
 
   return (
     <Nav className={css.nav}>
-      <NavbarBrand className={css.link} href="/">CARO</NavbarBrand>
+      <Link className={css.link} href="/">CARO</Link>
       <NavLink className={css.link} onClick={handleCta}>{ctaTitle}</NavLink>
     </Nav>
   );

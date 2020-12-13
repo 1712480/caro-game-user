@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { newGame } from '../../../redux/currentMatch';
+import { reStartGame } from '../../../redux/currentMatch';
 
 const EndGame = () => {
   const isEndGame = useSelector((state) => state.match.isEndGame);
   const dispatch = useDispatch();
+
   const onNewGame = () => {
-    const action = newGame();
+    const action = reStartGame();
     dispatch(action);
   };
   return (
@@ -16,7 +17,7 @@ const EndGame = () => {
         <ModalHeader>MÀY THUA RỒI!</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={onNewGame}>New Game</Button>
-          <Button color="secondary">Exit</Button>
+          <Button color="secondary" onClick={onNewGame}>Exit</Button>
         </ModalFooter>
       </Modal>
     </div>
