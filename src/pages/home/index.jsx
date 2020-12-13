@@ -11,25 +11,11 @@ import MatchCard from '../../components/MatchCard';
 
 import css from './css.module.scss';
 
-const mockData = [
-  {
-    x: 'Tran Van Quy',
-    y: 'Nguyen Hoang Thien An',
-    roomName: 'Quy\'s room',
-    roomId: '1',
-  },
-];
-
 const Home = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
-  const [refresh, setRefresh] = useState(false);
-  const [rooms, setRooms] = useState(mockData);
+  const [rooms, setRooms] = useState([]);
   const router = useRouter();
-
-  const fireRefresh = () => {
-    setRefresh(!refresh);
-  };
 
   useEffect(() => {
     if (!currentUser) {
@@ -38,26 +24,46 @@ const Home = (props) => {
     } else {
       socket.emit('client-login', currentUser);
     }
-  }, [currentUser, refresh]);
+
+    socket.emit('get-rooms');
+  }, [currentUser]);
+
+  socket.on('rooms', (response) => {
+    setRooms(response);
+  });
+
+  socket.on('active-rooms', (response) => {
+    setRooms(response);
+  });
+
+  socket.on('created-room', (response) => {
+    router.push(`/match/${response.roomId}`);
+  });
 
   const createNewRoom = () => {
     const { user } = currentUser;
     const name = user.fullName ? user.fullName : user.email;
 
-    setRooms(rooms.concat({
+    const roomID = uuid();
+
+    const newRoom = {
       x: name,
       y: null,
       roomName: `${name}'s room`,
-      roomId: uuid(),
-    }));
+      roomId: roomID,
+    };
+
+    socket.emit('create-room', newRoom);
   };
 
   const handleGoToRoom = (roomId) => {
+    socket.emit('joined', { roomId, currentUser });
     router.push(`/match/${roomId}`);
   };
 
   const renderCardList = rooms && rooms.map((room) => (
-    <MatchCard {...room} key={room.roomId} handleOnClick={() => handleGoToRoom(room.roomId)} />));
+    <MatchCard {...room} key={room.roomId} handleOnClick={() => handleGoToRoom(room.roomId)} />
+  ));
 
   return currentUser ? (
     <Container className={css.container}>
@@ -67,7 +73,7 @@ const Home = (props) => {
         </Card>
         {renderCardList}
       </Container>
-      <OnlineUser user={currentUser} socket={socket} refresh={fireRefresh} />
+      <OnlineUser user={currentUser} socket={socket} />
     </Container>
   ) : null;
 };
