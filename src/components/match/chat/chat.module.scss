@@ -1,0 +1,26 @@
+.chatWrapper {
+  width: 350px;
+  height: fit-content;
+  padding: 20px;
+  .card{
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+    .listMess{
+      overflow-y: auto;
+      padding-bottom: 40px;
+      height: 100%;
+    }
+    .inputChat{
+      outline: 0;
+      border-width: 0;
+      border-top: 1px solid #aca9a9;
+
+      font-size: 15px;
+      position: absolute;
+      bottom: 0;
+
+      height: 40px;
+    }
+  }
+}
