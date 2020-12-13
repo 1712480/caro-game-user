@@ -6,12 +6,12 @@ import styles from './styles.module.scss';
 import EndGame from '../../components/match/endGame';
 import UserPlaying from '../../components/match/userPlaying';
 import Chat from '../../components/match/chat';
-import { reStartGame } from '../../redux/currentMatch';
+import { restartGame } from '../../redux/currentMatch';
 
 const Match = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const action = reStartGame();
+    const action = restartGame();
     dispatch(action);
   });
   return (

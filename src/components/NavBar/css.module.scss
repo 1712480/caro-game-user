@@ -1,6 +1,17 @@
 .nav {
   height: 80px;
   background-color: #3b3b3b;
+  a {
+    color: white;
+    cursor: pointer;
+    font-size: 25px;
+    &:hover {
+      color: white;
+      border-bottom: 0;
+      outline: 0;
+      text-decoration: none;
+    }
+  }
 }
 
 .link {

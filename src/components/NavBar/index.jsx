@@ -26,8 +26,10 @@ const NavBar = (props) => {
 
   return (
     <Nav className={css.nav}>
-      <Link className={css.link} href="/">CARO</Link>
-      <NavLink className={css.link} onClick={handleCta}>{ctaTitle}</NavLink>
+      <Link className={css.linkCaro} href="/">CARO</Link>
+      <NavLink className={css.link} style={{ fontSize: 15 }} onClick={handleCta}>
+        {ctaTitle}
+      </NavLink>
     </Nav>
   );
 };

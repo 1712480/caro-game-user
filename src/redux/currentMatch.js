@@ -49,13 +49,13 @@ export const currentMatchSlice = createSlice({
       isTurnX: true,
       isEndGame: false,
     }),
-    reStartGame: (state) => ({
+    restartGame: (state) => ({
       ...state,
       ...init,
     }),
   },
 });
 
-export const { exeMove, newGame, reStartGame } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;

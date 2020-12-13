@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { reStartGame } from '../../../redux/currentMatch';
+import { restartGame } from '../../../redux/currentMatch';
 
 const EndGame = () => {
   const isEndGame = useSelector((state) => state.match.isEndGame);
   const dispatch = useDispatch();
 
   const onNewGame = () => {
-    const action = reStartGame();
+    const action = restartGame();
     dispatch(action);
   };
   return (
