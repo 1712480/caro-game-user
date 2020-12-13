@@ -1,0 +1,21 @@
+.btn{
+  outline: 0;
+  width: 33px;
+  height: 33px;
+  border: 0.5px solid #cdc9c9;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-size: 22px;
+  &:focus{
+    outline: 0;
+  }
+
+  &:hover{
+    background-color: #4dd0e1;
+  }
+}
