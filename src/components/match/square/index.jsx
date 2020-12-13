@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { exeMove } from '../../../redux/currentMatch';
 
-function Square({ x, y, value }) {
+function Square({ x, y, value, socket }) {
   const isEndGame = useSelector((state) => state.match.isEndGame);
   const dispatch = useDispatch();
   const clickBtn = () => {
     if (value === 0 && !isEndGame) {
+      socket.emit('client-make-move', { x, y });
       const action = exeMove({ x, y });
       dispatch(action);
     }

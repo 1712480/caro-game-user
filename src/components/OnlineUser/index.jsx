@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button, UncontrolledCollapse, ListGroup, ListGroupItem, Card } from 'reactstrap';
 
@@ -7,15 +7,8 @@ import css from './css.module.scss';
 const OnlineUser = (props) => {
   const {
     socket,
-    refresh,
   } = props;
   const [onlineUsers, setOnlineUsers] = useState([]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      refresh();
-    }, 3000);
-  });
 
   socket.on('online-users', (response) => {
     // Should exclude myself here
