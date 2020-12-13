@@ -2,18 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { maxLength } from '../utils/constant';
 import { checkEndGame } from '../utils/checkEndGame';
 
-const generateMap = (length) => {
-  const Map = [];
-  for (let i = 0; i < length; i += 1) {
-    const row = [];
-    for (let j = 0; j < length; j += 1) {
-      row.push(0);
-    }
-    Map.push(row);
-  }
-  return Map;
-};
+const generateMap = (length) => Array(length).fill(Array(length).fill(0));
 
+// add reducer exit game
 export const currentMatchSlice = createSlice({
   name: 'currentMatch',
   initialState: {
@@ -62,5 +53,3 @@ export const currentMatchSlice = createSlice({
 export const { exeMove, newGame } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;
-
-// export const selectUser = (state) => state.user;
