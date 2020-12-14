@@ -5,6 +5,7 @@ import { restartGame } from '../../../redux/currentMatch';
 
 const EndGame = () => {
   const isEndGame = useSelector((state) => state.match.isEndGame);
+  const myTurn = useSelector((state) => state.match.isTurnX);
   const dispatch = useDispatch();
 
   const onNewGame = () => {
@@ -14,7 +15,7 @@ const EndGame = () => {
   return (
     <div>
       <Modal isOpen={isEndGame}>
-        <ModalHeader>MÀY THUA RỒI!</ModalHeader>
+        <ModalHeader>{myTurn ? 'You lose!' : 'You win!'}</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={onNewGame}>New Game</Button>
           <Button color="secondary" onClick={onNewGame}>Exit</Button>

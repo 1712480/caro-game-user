@@ -6,7 +6,7 @@ const generateMap = (length) => Array(length).fill(Array(length).fill(0));
 
 const init = {
   mapMatch: generateMap(maxLength),
-  isTurnX: true,
+  isTurnX: false,
   success: true,
   isEndGame: false,
 };
@@ -46,16 +46,19 @@ export const currentMatchSlice = createSlice({
     newGame: (state) => ({
       ...state,
       mapMatch: generateMap(maxLength),
-      isTurnX: true,
+      isTurnX: false,
       isEndGame: false,
     }),
-    restartGame: (state) => ({
-      ...state,
+    restartGame: () => ({
       ...init,
+    }),
+    setIsTurnX: (state, action) => ({
+      ...state,
+      isTurnX: action.payload,
     }),
   },
 });
 
-export const { exeMove, newGame, restartGame } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame, setIsTurnX } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;
