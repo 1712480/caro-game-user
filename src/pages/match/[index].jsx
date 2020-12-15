@@ -13,6 +13,7 @@ import { selectUser } from '../../redux/userSlice';
 const Match = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
+  const [competitor, setCompetitor] = useState(null);
   const param = useRouter();
   const dispatch = useDispatch();
 
@@ -22,11 +23,13 @@ const Match = (props) => {
     });
     socket.on(`start-game-${param.query.index}`, (response) => {
       if (response.roomDetails.y.username !== currentUser.user.email) {
-        const action = setIsTurnX(false);
-        dispatch(action);
-      } else {
         const action = setIsTurnX(true);
         dispatch(action);
+        setCompetitor(response.roomDetails.y.username);
+      } else {
+        const action = setIsTurnX(false);
+        dispatch(action);
+        setCompetitor(response.roomDetails.x);
       }
     });
 
@@ -40,16 +43,18 @@ const Match = (props) => {
       const action = restartGame();
       dispatch(action);
     };
-  }, []);
+  }, [currentUser.user.email, dispatch, param.query.index, socket]);
 
   return (
     <div className={styles.matchWrapper}>
-      <div>
-        <UserPlaying name="Tran Nhut Kha" img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
-        <UserPlaying name="Waiting..." img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+      <div className={styles.userPlaying}>
+        <UserPlaying name={currentUser.user.email} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+        <UserPlaying name={competitor !== null ? competitor : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
       </div>
       <Board socket={socket} roomId={param.query.index} />
-      <Chat />
+      <div className={styles.chat}>
+        <Chat />
+      </div>
       <EndGame />
       <Button style={{ position: 'fixed', top: 100, left: 50 }} color="warning">Start</Button>
     </div>
