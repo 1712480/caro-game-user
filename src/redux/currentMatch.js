@@ -49,8 +49,9 @@ export const currentMatchSlice = createSlice({
       isTurnX: false,
       isEndGame: false,
     }),
-    restartGame: () => ({
+    restartGame: (state, action) => ({
       ...init,
+      isTurnX: action.payload,
     }),
     setIsTurnX: (state, action) => ({
       ...state,

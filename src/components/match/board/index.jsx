@@ -28,7 +28,9 @@ function Board(props) {
   const match = RenderBoard(mapMatch, socket, roomId);
 
   return (
-    <div className={styles.boardWrapper} style={{ lineHeight: 0 }}>{match}</div>
+    <div className={styles.boardWrapper} style={{ lineHeight: 0 }}>
+      {match}
+    </div>
   );
 }
 
