@@ -45,8 +45,6 @@ const SignUp = () => {
         username: value.email,
         password: value.password,
         name: value.name,
-      }, {
-        withCredentials: true,
       })
         .then((res) => {
           if (res.status === 201) {
