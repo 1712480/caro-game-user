@@ -35,7 +35,7 @@ const Match = (props) => {
         }
       });
 
-      socket.on(`server-resp-move${param.query.index}`, (response) => {
+      socket.on(`server-resp-move-${param.query.index}`, (response) => {
         if (response.player !== currentUser.user.email) {
           const action = exeMove({ x: response.move.x, y: response.move.y });
           dispatch(action);
@@ -56,7 +56,7 @@ const Match = (props) => {
       </div>
       <Board socket={socket} roomId={param.query.index} />
       <div className={styles.chat}>
-        <Chat />
+        <Chat socket={socket} roomId={param.query.index} />
       </div>
       <EndGame />
       <Button style={{ position: 'fixed', top: 100, left: 50 }} color="warning">Start</Button>
