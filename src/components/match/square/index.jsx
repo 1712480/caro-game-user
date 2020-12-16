@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
+import { selectUser } from '../../../redux/userSlice';
 import { exeMove } from '../../../redux/currentMatch';
 
-function Square({ x, y, value, socket }) {
+function Square({ x, y, value, socket, roomId }) {
+  const [currentUser] = useState(useSelector(selectUser));
   const isEndGame = useSelector((state) => state.match.isEndGame);
+  const myTurn = useSelector((state) => state.match.isTurnX);
   const dispatch = useDispatch();
+
   const clickBtn = () => {
-    if (value === 0 && !isEndGame) {
-      socket.emit('client-make-move', { x, y });
+    if (value === 0 && !isEndGame && myTurn) {
+      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId });
       const action = exeMove({ x, y });
       dispatch(action);
     }

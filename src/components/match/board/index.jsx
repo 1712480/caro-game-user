@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
 
-const RenderBoard = (data, socket) => {
+const RenderBoard = (data, socket, roomId) => {
   const Component = data.map((record, indexX) => {
     const recordI = record.map((sq, indexY) => (
       <Square
@@ -13,6 +13,7 @@ const RenderBoard = (data, socket) => {
         y={indexY}
         value={data[indexX][indexY]}
         socket={socket}
+        roomId={roomId}
       />
     ));
     // eslint-disable-next-line react/no-array-index-key
@@ -22,12 +23,14 @@ const RenderBoard = (data, socket) => {
 };
 
 function Board(props) {
-  const { socket } = props;
+  const { socket, roomId } = props;
   const mapMatch = useSelector((state) => state.match.mapMatch);
-  const match = RenderBoard(mapMatch, socket);
+  const match = RenderBoard(mapMatch, socket, roomId);
 
   return (
-    <div className={styles.boardWrapper} style={{ lineHeight: 0 }}>{match}</div>
+    <div className={styles.boardWrapper} style={{ lineHeight: 0 }}>
+      {match}
+    </div>
   );
 }
 
