@@ -10,7 +10,7 @@ const MatchCard = ({ roomId, roomName, x, y, handleOnClick }) => (
     </CardTitle>
     <p className={css.text}>
       <b>Master: </b>
-      {x}
+      {x.fullName}
     </p>
     <p className={css.text}>
       <b>Challenger: </b>
