@@ -13,11 +13,20 @@ import { selectUser } from '../../redux/userSlice';
 const Match = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
+  const roomId = useSelector((state) => state.match.roomId);
+  const matchId = useSelector((state) => state.match.matchId);
   const [competitor, setCompetitor] = useState(null);
   const [host, setHost] = useState(null);
   const myTurn = useSelector((state) => state.match.isTurnX);
+  const isEndGame = useSelector((state) => state.match.isEndGame);
   const param = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEndGame) {
+      socket.emit('end-game', { roomId, matchId });
+    }
+  }, [isEndGame]);
 
   useEffect(() => {
     if (currentUser != null) {

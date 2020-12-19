@@ -6,6 +6,7 @@ import { exeMove } from '../../../redux/currentMatch';
 
 function Square({ x, y, value, socket, roomId }) {
   const [currentUser] = useState(useSelector(selectUser));
+  const matchId = useSelector((state) => state.match.matchId);
   const userPlaying = useSelector((state) => state.match.userPlaying);
   const isEndGame = useSelector((state) => state.match.isEndGame);
   const myTurn = useSelector((state) => state.match.isTurnX);
@@ -19,7 +20,7 @@ function Square({ x, y, value, socket, roomId }) {
         && currentUser.user.email !== userPlaying.competitor.username) {
         return;
       }
-      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId });
+      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId, matchId });
       const action = exeMove({ x, y });
       dispatch(action);
     }

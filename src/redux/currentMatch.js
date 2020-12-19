@@ -9,6 +9,7 @@ const init = {
   matchId: null,
   isTurnX: false,
   isEndGame: false,
+  roomId: null,
   userPlaying: {
     host: null,
     competitor: null,
@@ -63,6 +64,7 @@ export const currentMatchSlice = createSlice({
         ...state,
         isTurnX: match.myTurn,
         matchId: match.matchId,
+        roomId: match.roomId,
         userPlaying: {
           host: match.roomDetails.x,
           competitor: match.roomDetails.y,
