@@ -24,6 +24,7 @@ const Login = () => {
       router.push('/home');
     }
   }, [user]);
+
   const formik = useFormik({
     initialValues: {
       email: '',
