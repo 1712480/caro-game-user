@@ -8,7 +8,9 @@ function Square({ x, y, value, socket, roomId }) {
   const [currentUser] = useState(useSelector(selectUser));
   const isEndGame = useSelector((state) => state.match.isEndGame);
   const myTurn = useSelector((state) => state.match.isTurnX);
+  const currentMove = useSelector((state) => state.match.currentMove);
   const dispatch = useDispatch();
+  const isCurrentMove = currentMove.x === x && currentMove.y === y;
 
   const clickBtn = () => {
     if (value === 0 && !isEndGame && myTurn) {
@@ -20,7 +22,7 @@ function Square({ x, y, value, socket, roomId }) {
 
   switch (value) {
   case 1:
-    return <button style={{ color: 'red' }} className={styles.btn} type="button" onClick={clickBtn}>X</button>;
+    return <button style={{ color: 'red', fontWeight: isCurrentMove ? 'bold' : 'lighter' }} className={styles.btn} type="button" onClick={clickBtn}>X</button>;
   case 2:
     return <button style={{ color: 'green' }} className={styles.btn} type="button" onClick={clickBtn}>O</button>;
   default:

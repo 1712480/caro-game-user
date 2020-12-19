@@ -9,6 +9,10 @@ const init = {
   isTurnX: false,
   success: true,
   isEndGame: false,
+  currentMove: {
+    x: null,
+    y: null,
+  },
 };
 
 // add reducer exit game
@@ -29,12 +33,17 @@ export const currentMatchSlice = createSlice({
         }
         return row;
       });
+      const newCurrentMove = {
+        x,
+        y,
+      };
       if (checkEndGame(newArray, x, y)) {
         return {
           ...state,
           mapMatch: newArray,
           isTurnX: !state.isTurnX,
           isEndGame: true,
+          currentMove: { ...newCurrentMove },
         };
       }
       return {
