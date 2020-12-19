@@ -6,8 +6,8 @@ const generateMap = (length) => Array(length).fill(Array(length).fill(0));
 
 const init = {
   mapMatch: generateMap(maxLength),
+  matchId: null,
   isTurnX: false,
-  success: true,
   isEndGame: false,
   userPlaying: {
     host: null,
@@ -17,6 +17,7 @@ const init = {
     x: null,
     y: null,
   },
+  success: true,
 };
 
 // add reducer exit game
@@ -56,9 +57,18 @@ export const currentMatchSlice = createSlice({
         currentMove: { ...newCurrentMove },
       };
     },
-    startGame: (state) => ({
-      ...state,
-    }),
+    startGame: (state, action) => {
+      const match = action.payload;
+      return {
+        ...state,
+        isTurnX: match.myTurn,
+        matchId: match.matchId,
+        userPlaying: {
+          host: match.roomDetails.x,
+          competitor: match.roomDetails.y,
+        },
+      };
+    },
     newGame: (state) => ({
       ...state,
       mapMatch: generateMap(maxLength),
@@ -69,13 +79,9 @@ export const currentMatchSlice = createSlice({
       ...init,
       isTurnX: action.payload,
     }),
-    setIsTurnX: (state, action) => ({
-      ...state,
-      isTurnX: action.payload,
-    }),
   },
 });
 
-export const { exeMove, newGame, restartGame, setIsTurnX } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame, startGame } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;

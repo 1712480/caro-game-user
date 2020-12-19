@@ -7,14 +7,14 @@ import styles from './styles.module.scss';
 import EndGame from '../../components/match/endGame';
 import UserPlaying from '../../components/match/userPlaying';
 import Chat from '../../components/match/chat';
-import { exeMove, restartGame, setIsTurnX } from '../../redux/currentMatch';
+import { exeMove, restartGame, startGame } from '../../redux/currentMatch';
 import { selectUser } from '../../redux/userSlice';
 
 const Match = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
-  const [matchId, setMatchId] = useState(null);
   const [competitor, setCompetitor] = useState(null);
+  const [host, setHost] = useState(null);
   const myTurn = useSelector((state) => state.match.isTurnX);
   const param = useRouter();
   const dispatch = useDispatch();
@@ -25,16 +25,15 @@ const Match = (props) => {
         socket.emit('request-start-game', response);
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
-        // console.log(response);
-        if (response.roomDetails.y.username !== currentUser.user.email) {
-          const action = setIsTurnX(true);
-          dispatch(action);
-          setCompetitor(response.roomDetails.y.username);
-          setMatchId(response.matchId);
+        const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
+        const action = startGame({ myTurn: isMyTurn, ...response });
+        dispatch(action);
+        if (response.roomDetails.x.username === currentUser.user.email) {
+          setCompetitor(response.roomDetails.y);
+          setHost(response.roomDetails.x);
         } else {
-          const action = setIsTurnX(false);
-          dispatch(action);
-          setCompetitor(response.roomDetails.x.fullName);
+          setCompetitor(response.roomDetails.x);
+          setHost(response.roomDetails.y);
         }
       });
 
@@ -45,6 +44,7 @@ const Match = (props) => {
         }
       });
     }
+
     return () => {
       const action = restartGame(false);
       dispatch(action);
@@ -54,10 +54,10 @@ const Match = (props) => {
   return (
     <div className={styles.matchWrapper}>
       <div className={styles.userPlaying}>
-        <UserPlaying isCurrentUser myTurn={myTurn} name={currentUser?.user.email} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
-        <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+        <UserPlaying isCurrentUser myTurn={myTurn} name={host?.fullName} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+        <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor.fullName : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
       </div>
-      <Board socket={socket} roomId={param.query.index} matchId={matchId} />
+      <Board socket={socket} roomId={param.query.index} />
       <div className={styles.chat}>
         <Chat socket={socket} roomId={param.query.index} />
       </div>
