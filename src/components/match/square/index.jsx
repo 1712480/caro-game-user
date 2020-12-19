@@ -14,11 +14,11 @@ function Square({ x, y, value, socket, roomId }) {
   const isCurrentMove = currentMove.x === x && currentMove.y === y;
 
   const clickBtn = () => {
-    if (currentUser.user.email !== userPlaying.host.username
-      && currentUser.user.email !== userPlaying.competitor.username) {
-      return;
-    }
     if (value === 0 && !isEndGame && myTurn) {
+      if (currentUser.user.email !== userPlaying.host.username
+        && currentUser.user.email !== userPlaying.competitor.username) {
+        return;
+      }
       socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId });
       const action = exeMove({ x, y });
       dispatch(action);
