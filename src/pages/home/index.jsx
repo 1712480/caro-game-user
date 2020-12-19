@@ -28,14 +28,17 @@ const Home = (props) => {
     socket.emit('get-rooms');
   }, [currentUser]);
 
+  // When first enter home page
   socket.on('rooms', (response) => {
     setRooms(response);
   });
 
+  // When a user create new room
   socket.on('active-rooms', (response) => {
     setRooms(response);
   });
 
+  // When current user create room
   socket.on('created-room', (response) => {
     router.push(`/match/${response.roomId}`);
   });
@@ -47,7 +50,10 @@ const Home = (props) => {
     const roomID = uuid();
 
     const newRoom = {
-      x: name,
+      x: {
+        username: user.email,
+        fullName: user.fullName,
+      },
       y: null,
       roomName: `${name}'s room`,
       roomId: roomID,

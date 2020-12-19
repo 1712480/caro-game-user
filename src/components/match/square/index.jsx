@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { selectUser } from '../../../redux/userSlice';
 import { exeMove } from '../../../redux/currentMatch';
 
-function Square({ x, y, value, socket, roomId }) {
+function Square({ x, y, value, socket, roomId, matchId }) {
   const [currentUser] = useState(useSelector(selectUser));
   const userPlaying = useSelector((state) => state.match.userPlaying);
   const isEndGame = useSelector((state) => state.match.isEndGame);
@@ -17,7 +17,7 @@ function Square({ x, y, value, socket, roomId }) {
     if (currentUser.username !== userPlaying.host
       || currentUser.username !== userPlaying.competitor) return;
     if (value === 0 && !isEndGame && myTurn) {
-      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId });
+      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId, matchId });
       const action = exeMove({ x, y });
       dispatch(action);
     }

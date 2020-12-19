@@ -13,6 +13,7 @@ import { selectUser } from '../../redux/userSlice';
 const Match = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
+  const [matchId, setMatchId] = useState(null);
   const [competitor, setCompetitor] = useState(null);
   const myTurn = useSelector((state) => state.match.isTurnX);
   const param = useRouter();
@@ -29,10 +30,11 @@ const Match = (props) => {
           const action = setIsTurnX(true);
           dispatch(action);
           setCompetitor(response.roomDetails.y.username);
+          setMatchId(response.matchId);
         } else {
           const action = setIsTurnX(false);
           dispatch(action);
-          setCompetitor(response.roomDetails.x);
+          setCompetitor(response.roomDetails.x.fullName);
         }
       });
 
@@ -55,7 +57,7 @@ const Match = (props) => {
         <UserPlaying isCurrentUser myTurn={myTurn} name={currentUser?.user.email} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
         <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
       </div>
-      <Board socket={socket} roomId={param.query.index} />
+      <Board socket={socket} roomId={param.query.index} matchId={matchId} />
       <div className={styles.chat}>
         <Chat socket={socket} roomId={param.query.index} />
       </div>

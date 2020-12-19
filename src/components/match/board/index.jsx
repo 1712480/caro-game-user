@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
 
-const RenderBoard = (data, socket, roomId) => {
+const RenderBoard = (data, socket, roomId, matchId) => {
   const Component = data.map((record, indexX) => {
     const recordI = record.map((sq, indexY) => (
       <Square
@@ -14,6 +14,7 @@ const RenderBoard = (data, socket, roomId) => {
         value={data[indexX][indexY]}
         socket={socket}
         roomId={roomId}
+        matchId={matchId}
       />
     ));
     // eslint-disable-next-line react/no-array-index-key

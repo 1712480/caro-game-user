@@ -17,7 +17,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 // https://caro-game-backend.herokuapp.com || http://localhost:3001
-const socket = socketIOClient('https://caro-game-backend.herokuapp.com');
+const socket = socketIOClient('http://localhost:3001');
 
 const MyApp = ({ Component, pageProps }) => (
   <Provider store={store}>
