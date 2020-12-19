@@ -24,6 +24,7 @@ const Match = (props) => {
         socket.emit('request-start-game', response);
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
+        // console.log(response);
         if (response.roomDetails.y.username !== currentUser.user.email) {
           const action = setIsTurnX(true);
           dispatch(action);
@@ -51,7 +52,7 @@ const Match = (props) => {
   return (
     <div className={styles.matchWrapper}>
       <div className={styles.userPlaying}>
-        <UserPlaying myTurn={myTurn} name={currentUser?.user.email} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+        <UserPlaying isCurrentUser myTurn={myTurn} name={currentUser?.user.email} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
         <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
       </div>
       <Board socket={socket} roomId={param.query.index} />

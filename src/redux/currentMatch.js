@@ -9,6 +9,10 @@ const init = {
   isTurnX: false,
   success: true,
   isEndGame: false,
+  userPlaying: {
+    host: null,
+    competitor: null,
+  },
   currentMove: {
     x: null,
     y: null,
@@ -33,25 +37,28 @@ export const currentMatchSlice = createSlice({
         }
         return row;
       });
-      const newCurrentMove = {
-        x,
-        y,
-      };
       if (checkEndGame(newArray, x, y)) {
         return {
           ...state,
           mapMatch: newArray,
           isTurnX: !state.isTurnX,
           isEndGame: true,
-          currentMove: { ...newCurrentMove },
         };
       }
+      const newCurrentMove = {
+        x: action.payload.x,
+        y: action.payload.y,
+      };
       return {
         ...state,
         mapMatch: newArray,
         isTurnX: !state.isTurnX,
+        currentMove: { ...newCurrentMove },
       };
     },
+    startGame: (state) => ({
+      ...state,
+    }),
     newGame: (state) => ({
       ...state,
       mapMatch: generateMap(maxLength),

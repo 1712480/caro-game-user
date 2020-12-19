@@ -12,3 +12,12 @@
 
   min-width: 180px;
 }
+
+.cardBody
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
