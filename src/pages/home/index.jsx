@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
-import { Container, Card } from 'reactstrap';
+import { Container, Card, Spinner } from 'reactstrap';
 
 import { selectUser } from '../../redux/userSlice';
 import OnlineUser from '../../components/OnlineUser';
 import MatchCard from '../../components/MatchCard';
+import { useAuth } from '../../components/AuthProvider';
 
 import css from './css.module.scss';
 
@@ -18,15 +18,15 @@ const Home = (props) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser) {
-      toast.error('Please login with your account first.');
-      router.push('/');
-    } else {
-      socket.emit('client-login', currentUser);
-    }
-
+    socket.emit('client-login', currentUser);
     socket.emit('get-rooms');
   }, [currentUser]);
+
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Spinner className={css.spinner} />;
+  }
 
   // When first enter home page
   socket.on('rooms', (response) => {
@@ -71,7 +71,7 @@ const Home = (props) => {
     <MatchCard {...room} key={room.roomId} handleOnClick={() => handleGoToRoom(room.roomId)} />
   ));
 
-  return currentUser ? (
+  return (
     <Container className={css.container}>
       <Container className={css.grid}>
         <Card className={css.plus} onClick={createNewRoom}>
@@ -81,7 +81,7 @@ const Home = (props) => {
       </Container>
       <OnlineUser user={currentUser} socket={socket} />
     </Container>
-  ) : null;
+  );
 };
 
 export default Home;
