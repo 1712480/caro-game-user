@@ -1,5 +1,5 @@
 // http://localhost:3001/ || 'https://caro-game-backend.herokuapp.com/'
-export const API_HOST = 'http://localhost:3001/';
+export const API_HOST = 'https://caro-game-backend.herokuapp.com/';
 
 export const API_END_POINT = {
   USER_CREATE: 'users/register',
@@ -7,3 +7,14 @@ export const API_END_POINT = {
 };
 
 export const maxLength = 15;
+
+export const ROUTE = {
+  HOME: '/home',
+  MATCH: '/match/[index]',
+  LOGIN: '/',
+  SIGN_UP: '/sign-up',
+  HISTORY: '/history',
+  HISTORY_ID: '/history/[id]',
+};
+
+export const SECURED_PATH = [ROUTE.HOME, ROUTE.MATCH, ROUTE.HISTORY, ROUTE.HISTORY_ID];

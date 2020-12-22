@@ -24,7 +24,7 @@ const Match = (props) => {
 
   useEffect(() => {
     if (isEndGame) {
-      socket.emit('end-game', { roomId, matchId });
+      socket.emit('end-game', { roomId, matchId, myTurn, currentUser });
     }
   }, [isEndGame]);
 

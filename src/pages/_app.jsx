@@ -6,6 +6,7 @@ import socketIOClient from 'socket.io-client';
 
 import NavBar from '../components/NavBar';
 import { store } from '../redux/store';
+import AuthProvider from '../components/AuthProvider';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,17 +18,19 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 // https://caro-game-backend.herokuapp.com || http://localhost:3001
-const socket = socketIOClient('http://localhost:3001');
+const socket = socketIOClient('https://caro-game-backend.herokuapp.com');
 
 const MyApp = ({ Component, pageProps }) => (
   <Provider store={store}>
-    <div className={css.container}>
-      <NavBar socket={socket} />
-      <div className={css.content}>
-        <Component {...pageProps} socket={socket} />
+    <AuthProvider>
+      <div className={css.container}>
+        <NavBar socket={socket} />
+        <div className={css.content}>
+          <Component {...pageProps} socket={socket} />
+        </div>
+        <div className={css.footer}>1712267 - 1712480 - 1712512</div>
       </div>
-      <div className={css.footer}>1712267 - 1712480 - 1712512</div>
-    </div>
+    </AuthProvider>
   </Provider>
 );
 
