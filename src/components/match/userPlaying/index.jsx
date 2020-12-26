@@ -5,13 +5,13 @@ import {
 } from 'reactstrap';
 import styles from './styles.module.scss';
 
-const UserPlaying = ({ name, img, myTurn }) => (
+const UserPlaying = ({ name, img, myTurn, isCurrentUser }) => (
   <div className={styles.userPlayingWrapper}>
     <Card className={styles.cardUser} style={{ backgroundColor: myTurn ? 'yellow' : 'white' }}>
       <CardImg style={{ width: '120px' }} src={img} alt="Card image cap" />
-      <CardBody>
+      <CardBody className={styles.cardBody}>
         <CardTitle tag="h5">{name}</CardTitle>
-        <CardSubtitle tag="h6" className="mb-2 text-muted">Host</CardSubtitle>
+        <CardSubtitle tag="h6" className="mb-2 text-muted">{isCurrentUser ? 'X' : 'O'}</CardSubtitle>
       </CardBody>
     </Card>
   </div>
