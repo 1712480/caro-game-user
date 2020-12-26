@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Spinner } from 'reactstrap';
-
+import { Button } from 'reactstrap';
 import Board from '../../components/match/board';
 import styles from './styles.module.scss';
 import EndGame from '../../components/match/endGame';
@@ -10,16 +9,24 @@ import UserPlaying from '../../components/match/userPlaying';
 import Chat from '../../components/match/chat';
 import { exeMove, restartGame, startGame } from '../../redux/currentMatch';
 import { selectUser } from '../../redux/userSlice';
-import { useAuth } from '../../components/AuthProvider';
 
 const Match = (props) => {
   const { socket } = props;
   const [currentUser] = useState(useSelector(selectUser));
+  const roomId = useSelector((state) => state.match.roomId);
+  const matchId = useSelector((state) => state.match.matchId);
   const [competitor, setCompetitor] = useState(null);
   const [host, setHost] = useState(null);
   const myTurn = useSelector((state) => state.match.isTurnX);
+  const isEndGame = useSelector((state) => state.match.isEndGame);
   const param = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEndGame) {
+      socket.emit('end-game', { roomId, matchId, myTurn, currentUser });
+    }
+  }, [isEndGame]);
 
   useEffect(() => {
     if (currentUser != null) {
@@ -28,7 +35,7 @@ const Match = (props) => {
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
         const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
-        const action = startGame({ myTurn: isMyTurn, ...response });
+        const action = startGame({ ...response, myTurn: isMyTurn });
         dispatch(action);
         if (response.roomDetails.x.username === currentUser.user.email) {
           setCompetitor(response.roomDetails.y);
@@ -52,12 +59,6 @@ const Match = (props) => {
       dispatch(action);
     };
   }, [currentUser, dispatch, param.query.index, socket]);
-
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <Spinner className={styles.spinner} />;
-  }
 
   return (
     <div className={styles.matchWrapper}>
