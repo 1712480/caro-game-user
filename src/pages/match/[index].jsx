@@ -35,7 +35,7 @@ const Match = (props) => {
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
         const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
-        const action = startGame({ myTurn: isMyTurn, ...response });
+        const action = startGame({ ...response, myTurn: isMyTurn });
         dispatch(action);
         if (response.roomDetails.x.username === currentUser.user.email) {
           setCompetitor(response.roomDetails.y);
