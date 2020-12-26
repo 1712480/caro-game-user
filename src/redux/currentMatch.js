@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { maxLength } from '../utils/constant';
 import { checkEndGame } from '../utils/checkEndGame';
+import { ExeMove } from '../utils/exeMove';
 
 const generateMap = (length) => Array(length).fill(Array(length).fill(0));
 
@@ -28,17 +29,7 @@ export const currentMatchSlice = createSlice({
   reducers: {
     exeMove: (state, action) => {
       const { x, y } = action.payload;
-      const newArray = state.mapMatch.map((row, index) => {
-        if (index === x) {
-          return row.map((col, index1) => {
-            if (index1 === y) {
-              return state.isTurnX ? 1 : 2;
-            }
-            return col;
-          });
-        }
-        return row;
-      });
+      const newArray = ExeMove(state.mapMatch, x, y, state.isTurnX);
       if (checkEndGame(newArray, x, y)) {
         return {
           ...state,

@@ -25,7 +25,7 @@ const Chat = (props) => {
 
   useEffect(() => {
     socket.on(`server-response-message-${roomId}`, (response) => {
-      setMessages((oldMessages) => [...oldMessages, { response }]);
+      setMessages((oldMessages) => [...oldMessages, { response }].reverse());
     });
   }, []);
 
