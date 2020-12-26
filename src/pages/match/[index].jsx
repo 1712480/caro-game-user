@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
+
 import Board from '../../components/match/board';
 import styles from './styles.module.scss';
 import EndGame from '../../components/match/endGame';
@@ -9,6 +10,7 @@ import UserPlaying from '../../components/match/userPlaying';
 import Chat from '../../components/match/chat';
 import { exeMove, restartGame, startGame } from '../../redux/currentMatch';
 import { selectUser } from '../../redux/userSlice';
+import { useAuth } from '../../components/AuthProvider';
 
 const Match = (props) => {
   const { socket } = props;
@@ -50,6 +52,12 @@ const Match = (props) => {
       dispatch(action);
     };
   }, [currentUser, dispatch, param.query.index, socket]);
+
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Spinner className={styles.spinner} />;
+  }
 
   return (
     <div className={styles.matchWrapper}>

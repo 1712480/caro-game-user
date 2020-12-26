@@ -1,8 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
 import Router from 'next/router';
-import { Card, CardBody, CardTitle, ListGroup } from 'reactstrap';
+import { Card, CardBody, CardTitle, ListGroup, Spinner } from 'reactstrap';
 
+import { useAuth } from '../../components/AuthProvider';
 import css from './history.module.scss';
 
 const mockData = [
@@ -21,6 +22,12 @@ const mockData = [
 ];
 
 const History = ({ data }) => {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Spinner className={css.spinner} />;
+  }
+
   const renderItem = data && data.map((match) => {
     const { id, opponent, win, date } = match;
     return (
