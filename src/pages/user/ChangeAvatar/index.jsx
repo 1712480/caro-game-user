@@ -20,7 +20,7 @@ const ChangeAvatar = (props) => {
     // send file to server
   };
 
-  const { user } = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
   const [modal, setModal] = useState(false);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -30,7 +30,7 @@ const ChangeAvatar = (props) => {
 
   return (
     <>
-      <Image alt="avatar" publicId={`${user.email}`} onClick={toggle} />
+      <Image alt="avatar" publicId={`${currentUser?.user.email}`} onClick={toggle} />
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Change name</ModalHeader>
         <ModalBody>
