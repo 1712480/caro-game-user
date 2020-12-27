@@ -70,7 +70,7 @@ const Match = (props) => {
       <div className={styles.chat}>
         <Chat socket={socket} roomId={param.query.index} />
       </div>
-      <EndGame />
+      <EndGame socket={socket} roomId={param.query.index} />
       <Button style={{ position: 'fixed', top: 100, left: 50 }} color="warning">Start</Button>
     </div>
   );
