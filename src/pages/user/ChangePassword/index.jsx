@@ -11,12 +11,16 @@ import {
 } from 'reactstrap';
 import * as Yup from 'yup';
 
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import css from '../../index.module.scss';
+import { API_HOST, API_END_POINT } from '../../../utils/constant';
 
 const ChangePassword = (props) => {
   const {
     buttonLabel,
     className,
+    user,
   } = props;
 
   const ctaStyle = {
@@ -43,31 +47,32 @@ const ChangePassword = (props) => {
       oldPass: Yup.string()
         .required('Password cannot be empty'),
       newPass: Yup.string()
+        .min(6, 'Minimum length is 6')
         .required('New password cannot be empty'),
       confirm: Yup.string()
         .required('Confirm password cannot be empty')
         .oneOf([Yup.ref('newPass')], 'Doesn\'t match the new password.'),
     }),
-    // onSubmit: async (value, { setErrors }) => {
-    // setIsLoading(true);
-    // axios.post(API_HOST + 'change password end point', {
-    //   password: value.oldPass,
-    //   newPassword: value.newPass,
-    //   token: ,
-    // })
-    //   .then((res) => {
-    //     }
-    //   })
-    //   .catch(() => {
-    //   })
-    //   .finally(() => setIsLoading(false));
-    // },
-    onSubmit: () => {
+    onSubmit: async (value) => {
       setIsLoading(true);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      axios.post(API_HOST + API_END_POINT.USER_CHANGE_PASSWORD, {
+        oldPassword: value.oldPass,
+        newPassword: value.newPass,
+      }, {
+        headers: {
+          access_token: user?.access_token,
+        },
+      })
+        .then((res) => {
+          const { message } = res.data;
+          toast.success(message.msgBody);
+          // eslint-disable-next-line no-use-before-define
+          toggle();
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        })
+        .finally(() => setIsLoading(false));
     },
     validateOnChange: false,
   });
