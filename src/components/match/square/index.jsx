@@ -16,8 +16,8 @@ function Square({ x, y, value, socket, roomId }) {
 
   const clickBtn = () => {
     if (value === 0 && !isEndGame && myTurn) {
-      if (currentUser.user.email !== userPlaying.host.username
-        && currentUser.user.email !== userPlaying.competitor.username) {
+      if (currentUser.user.email !== userPlaying.host?.username
+        && currentUser.user.email !== userPlaying.competitor?.username) {
         return;
       }
       socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId, matchId });
@@ -28,9 +28,17 @@ function Square({ x, y, value, socket, roomId }) {
 
   switch (value) {
   case 1:
-    return <button style={{ color: 'red' }} className={styles.btn} type="button" onClick={clickBtn}>{!isCurrentMove ? 'X' : <b>X</b>}</button>;
+    return (
+      <button style={{ color: 'red' }} className={styles.btn} type="button" onClick={clickBtn}>
+        {!isCurrentMove ? 'X' : <b>X</b>}
+      </button>
+    );
   case 2:
-    return <button style={{ color: 'green' }} className={styles.btn} type="button" onClick={clickBtn}>{!isCurrentMove ? 'O' : <b>O</b>}</button>;
+    return (
+      <button style={{ color: 'green' }} className={styles.btn} type="button" onClick={clickBtn}>
+        {!isCurrentMove ? 'O' : <b>O</b>}
+      </button>
+    );
   default:
     return <button className={styles.btn} type="button" onClick={clickBtn}>{' '}</button>;
   }
