@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
 
 import { Image } from 'cloudinary-react';
 import {
@@ -16,8 +17,18 @@ const ChangeAvatar = (props) => {
     className,
   } = props;
 
-  const onDrop = () => {
-    // send file to server
+  const onDrop = async (files) => {
+    const formData = new FormData();
+    await formData.append('avatar', files[0]);
+    axios.post('http://localhost:3001/users/change-avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        // eslint-disable-next-line no-console
+        console.log(res);
+      });
   };
 
   const currentUser = useSelector(selectUser);
