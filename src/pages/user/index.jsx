@@ -50,7 +50,7 @@ const User = () => {
             <span className={css.right} />
           </div>
         </Card>
-        <ChangePassword buttonLabel="Change password" />
+        <ChangePassword user={currentUser} buttonLabel="Change password" />
       </div>
     </Container>
   );
