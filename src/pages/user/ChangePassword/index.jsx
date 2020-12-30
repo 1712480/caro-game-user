@@ -71,7 +71,7 @@ const ChangePassword = (props) => {
         })
         .catch((err) => {
           const { data } = err.response;
-          toast.error(data.msgBody);
+          toast.error(data.message.msgBody);
         })
         .finally(() => setIsLoading(false));
     },
