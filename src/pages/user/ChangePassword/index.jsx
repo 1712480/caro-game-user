@@ -70,7 +70,8 @@ const ChangePassword = (props) => {
           toggle();
         })
         .catch((err) => {
-          toast.error(err.message);
+          const { data } = err.response;
+          toast.error(data.msgBody);
         })
         .finally(() => setIsLoading(false));
     },
