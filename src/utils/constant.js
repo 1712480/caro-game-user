@@ -19,7 +19,7 @@ export const ROUTE = {
   HISTORY_ID: '/history/[id]',
 };
 
-export const GOOGLE_CLIENT_ID = '826449134729-2qc7bpdrf0htl70mf0ovbfh1cedav52k.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_ID = '491373195598-scmhrabujitrvfuvancfd11rm91m8bqe.apps.googleusercontent.com';
 
 export const USER_ROLE = {
   NORMAL_USER: 1,
