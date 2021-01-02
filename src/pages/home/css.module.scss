@@ -17,6 +17,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   min-height: 100px;
+  color: white;
 
   &:hover {
     top: -4px;
@@ -33,3 +34,5 @@
 .spinner {
   align-self: center;
 }
+
+

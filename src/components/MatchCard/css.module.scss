@@ -31,3 +31,21 @@
   margin: 1rem 0 0;
   text-wrap: normal;
 }
+
+.lock {
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.footerModal {
+  display: flex;
+  justify-content: space-between;
+}
