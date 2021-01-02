@@ -120,12 +120,16 @@ const Login = () => {
             onSuccess={googleLoginSuccess}
             onFailure={googleLoginFail}
             className={css.google}
+            cookiePolicy="single_host_origin"
           />
         </Form>
         <hr />
         <Label className={css.create}>
           Create a new account?
           <Link className={css.link} href="/sign-up"> Sign up</Link>
+        </Label>
+        <Label className={css.create}>
+          <Link className={css.link} href="/forgot-password">Forgot your password?</Link>
         </Label>
       </CardBody>
     </Card>
