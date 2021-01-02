@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { toast } from 'react-toastify';
 
 import {
@@ -93,7 +94,7 @@ const SignUp = () => {
         <hr />
         <Label className={css.create}>
           Already have an account?
-          <a className={css.link} href="/"> Log in</a>
+          <Link className={css.link} href="/"> Log in</Link>
         </Label>
       </CardBody>
     </Card>
