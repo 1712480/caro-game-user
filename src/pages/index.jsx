@@ -12,7 +12,6 @@ import { Card, CardTitle, CardBody, Form, FormGroup, Label, Input, Button, Spinn
 import { login, selectUser } from '../redux/userSlice';
 
 import { API_END_POINT, API_HOST, GOOGLE_CLIENT_ID } from '../utils/constant';
-import { parseGoogleAccountData } from '../utils/googleUtils';
 import css from './index.module.scss';
 
 const Login = () => {
@@ -27,13 +26,38 @@ const Login = () => {
     }
   }, [router, user]);
 
-  const loginSuccess = async (data) => {
+  const loginSuccess = (data) => {
     dispatch(login(data));
     toast.success('Login success!');
     return router.push('/home');
   };
 
-  const googleLoginSuccess = (response) => loginSuccess(parseGoogleAccountData(response));
+  const googleLoginSuccess = (response) => {
+    const { email, name } = response.profileObj;
+
+    axios.post(API_HOST + API_END_POINT.USER_LOGIN, {
+      username: email,
+      password: name,
+      fullName: name,
+      isNormalFlow: false,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          loginSuccess(res.data);
+        } else if (res.status === 201) {
+          router.push({
+            pathname: '/activate-account',
+            query: {
+              email,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message || 'Something occurred, please try again later!');
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   // eslint-disable-next-line no-console
   const googleLoginFail = (err) => console.log(err);
@@ -95,7 +119,7 @@ const Login = () => {
             clientId={GOOGLE_CLIENT_ID}
             onSuccess={googleLoginSuccess}
             onFailure={googleLoginFail}
-            className={css.button}
+            className={css.google}
           />
         </Form>
         <hr />
