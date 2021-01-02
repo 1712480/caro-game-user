@@ -53,7 +53,8 @@ const SignUp = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.message ? error.message : 'Sign Up failed, please try again later');
+          const { data } = error.response;
+          toast.error(data.message.msgBody ? data.message.msgBody : 'Sign Up failed, please try again later');
         })
         .finally(() => setIsLoading(false));
     },
