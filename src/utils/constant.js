@@ -5,6 +5,7 @@ export const API_END_POINT = {
   USER_CREATE: 'users/register',
   USER_LOGIN: 'users/login',
   USER_CHANGE_PASSWORD: 'users/info/password',
+  CHECK_OTP: 'users/check-otp',
 };
 
 export const maxLength = 15;

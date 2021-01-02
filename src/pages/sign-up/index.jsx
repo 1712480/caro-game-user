@@ -45,17 +45,22 @@ const SignUp = () => {
       axios.post(API_HOST + API_END_POINT.USER_CREATE, {
         username: value.email,
         password: value.password,
-        name: value.name,
+        fullName: value.name,
+        isNormalFlow: true,
       })
         .then((res) => {
-          if (res.status === 201) {
-            toast.success('Sign Up success!');
-            router.push('/');
-          }
+          const { message, isNormalFlow } = res?.data;
+          toast.success(message.msgBody);
+          router.push({
+            pathname: '/activate-account',
+            query: {
+              email: value.email,
+              isNormalFlow,
+            },
+          });
         })
         .catch((error) => {
-          const { data } = error.response;
-          toast.error(data.message.msgBody ? data.message.msgBody : 'Sign Up failed, please try again later');
+          toast.error(error.response?.message || 'Sign Up failed, please try again later');
         })
         .finally(() => setIsLoading(false));
     },

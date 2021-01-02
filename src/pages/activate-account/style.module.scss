@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    min-width: 500px;
+    padding: 1rem;
+
+    .error {
+      color: red;
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .submit {
+      width: 100%;
+    }
+  }
+}
+
