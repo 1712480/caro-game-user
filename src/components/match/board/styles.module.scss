@@ -1,4 +1,6 @@
 .boardWrapper{
-  border: 3px solid red;
   height: fit-content;
+
+  border: 20px solid transparent;
+  border-image: url("/boardBorder.png") 10 round;
 }
