@@ -10,6 +10,9 @@ import MatchCard from '../../components/MatchCard';
 import { useAuth } from '../../components/AuthProvider';
 
 import css from './css.module.scss';
+import CreateSecretRoom from '../../components/CreateSecretRoom';
+import QuickPlay from '../../components/QuickPlay';
+import PlayWithRoomID from '../../components/PlayWithRoomId';
 
 const Home = (props) => {
   const { socket } = props;
@@ -20,7 +23,7 @@ const Home = (props) => {
   useEffect(() => {
     socket.emit('client-login', currentUser);
     socket.emit('get-rooms');
-  }, [currentUser]);
+  }, [currentUser, socket]);
 
   const { isAuthenticated } = useAuth();
 
@@ -62,21 +65,20 @@ const Home = (props) => {
     socket.emit('create-room', newRoom);
   };
 
-  const handleGoToRoom = (roomId) => {
-    socket.emit('joined', { roomId, currentUser });
-    router.push(`/match/${roomId}`);
-  };
-
   const renderCardList = rooms && rooms.map((room) => (
-    <MatchCard {...room} key={room.roomId} handleOnClick={() => handleGoToRoom(room.roomId)} />
+    <MatchCard {...room} key={room.roomId} socket={socket} />
   ));
 
   return (
     <Container className={css.container}>
       <Container className={css.grid}>
-        <Card className={css.plus} onClick={createNewRoom}>
+        <Card className={css.plus} onClick={createNewRoom} style={{ backgroundColor: 'red' }}>
           <img src="/plus.svg" alt="plus" />
+          <div>Create Room</div>
         </Card>
+        <CreateSecretRoom socket={socket} />
+        <QuickPlay />
+        <PlayWithRoomID socket={socket} />
         {renderCardList}
       </Container>
       <OnlineUser user={currentUser} socket={socket} />
