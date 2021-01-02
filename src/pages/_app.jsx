@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
+import { CloudinaryContext } from 'cloudinary-react';
 
 import NavBar from '../components/NavBar';
 import { store } from '../redux/store';
@@ -13,9 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import css from './_app.module.scss';
 
 toast.configure();
-// axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 // https://caro-game-backend.herokuapp.com || http://localhost:3001
 const socket = socketIOClient('https://caro-game-backend.herokuapp.com');
@@ -23,13 +22,15 @@ const socket = socketIOClient('https://caro-game-backend.herokuapp.com');
 const MyApp = ({ Component, pageProps }) => (
   <Provider store={store}>
     <AuthProvider>
-      <div className={css.container}>
-        <NavBar socket={socket} />
-        <div className={css.content}>
-          <Component {...pageProps} socket={socket} />
+      <CloudinaryContext cloudName="dmiw0tnor">
+        <div className={css.container}>
+          <NavBar socket={socket} />
+          <div className={css.content}>
+            <Component {...pageProps} socket={socket} />
+          </div>
+          <div className={css.footer}>1712267 - 1712480 - 1712512</div>
         </div>
-        <div className={css.footer}>1712267 - 1712480 - 1712512</div>
-      </div>
+      </CloudinaryContext>
     </AuthProvider>
   </Provider>
 );

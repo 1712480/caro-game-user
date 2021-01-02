@@ -1,0 +1,155 @@
+.spinner {
+  align-self: center;
+}
+
+.mainContainer {
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  animation: fadeIn ease 0.5s;
+
+  .upper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-image: linear-gradient(45deg, #96d96f, #4490c6);
+
+    img {
+      width: 100px;
+      height: 100px;
+      margin-top: 2rem;
+      position: relative;
+      border-radius: 50%;
+      object-fit: contain;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .name {
+      display: flex;
+      position: relative;
+      margin: 2rem 0;
+
+      h3 {
+        height: 33px;
+        overflow: hidden;
+        line-height: 33px;
+        color: white;
+      }
+
+      img {
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        right: -2rem;
+        cursor: pointer;
+        border-radius: 0;
+        position: absolute;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  .lower {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 1rem 0;
+
+    .stat {
+      width: 80%;
+      padding: 0 1rem;
+      margin: 1rem;
+
+      .card {
+        top: 0;
+        display: flex;
+        margin: 1rem 0;
+        height: 80px;
+        position: relative;
+        transition: 0.2s all ease;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+
+        &:hover {
+          transform: scale(1.03);
+          z-index: 2;
+        }
+
+        .left {
+          width: 30%;
+          color: white;
+          display: flex;
+          font-size: 1.5rem;
+          align-items: center;
+          justify-content: center;
+          background-image: linear-gradient(45deg, #d96f6f, #44a1c6);
+        }
+
+        .mid {
+          width: 68%;
+          height: 100%;
+          display: flex;
+          font-size: 1.5rem;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .right {
+          width: 2%;
+          background-image: linear-gradient(45deg, #d96f6f, #44a1c6);
+        }
+      }
+    }
+
+    .ctas {
+      margin: 1rem 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+.dropZone {
+  height: 50vh;
+  border-radius: 10px;
+  border: 3px dashed #abeeab;
+  padding: 3px;
+  background-color: #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+    background-color: #f0ffeb;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
