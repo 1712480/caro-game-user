@@ -20,6 +20,7 @@ const init = {
     y: null,
   },
   success: true,
+  currentSocket: null,
 };
 
 // add reducer exit game
@@ -75,6 +76,6 @@ export const currentMatchSlice = createSlice({
   },
 });
 
-export const { exeMove, newGame, restartGame, startGame } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame, startGame, refreshGame } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;

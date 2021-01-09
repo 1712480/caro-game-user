@@ -4,6 +4,12 @@ import Square from '../square';
 import styles from './styles.module.scss';
 
 const RenderBoard = (data, socket, roomId) => {
+  socket.emit('moves', roomId);
+
+  socket.on(`server-response-moves-${roomId}`, () => {
+
+  });
+
   const Component = data.map((record, indexX) => {
     const recordI = record.map((sq, indexY) => (
       <Square
