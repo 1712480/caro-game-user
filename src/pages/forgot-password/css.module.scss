@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    min-width: 500px;
+    padding: 1rem;
+  }
+
+  .button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+  }
+
+  .error {
+    color: red;
+    font-size: 0.75rem;
+    margin: 0;
+  }
+}

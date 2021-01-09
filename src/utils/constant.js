@@ -6,6 +6,8 @@ export const API_END_POINT = {
   USER_LOGIN: 'users/login',
   USER_CHANGE_PASSWORD: 'users/info/password',
   CHECK_OTP: 'users/check-otp',
+  RESEND_OTP: 'users/resend-otp',
+  CHANGE_NAME: 'users/info/fullname',
 };
 
 export const maxLength = 15;

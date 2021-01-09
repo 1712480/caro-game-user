@@ -24,7 +24,7 @@ const User = () => {
         <ChangeAvatar />
         <div className={css.name}>
           <h3>{currentUser?.user.fullName || currentUser?.user.email}</h3>
-          <ChangeName />
+          <ChangeName user={currentUser} />
         </div>
       </div>
       <div className={css.lower}>

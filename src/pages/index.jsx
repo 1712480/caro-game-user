@@ -120,6 +120,7 @@ const Login = () => {
             onSuccess={googleLoginSuccess}
             onFailure={googleLoginFail}
             className={css.google}
+            isSignedIn={false}
             cookiePolicy="single_host_origin"
           />
         </Form>

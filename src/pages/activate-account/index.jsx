@@ -10,51 +10,50 @@ import { API_END_POINT, API_HOST } from '../../utils/constant';
 
 import css from './style.module.scss';
 
-const ActivateAccount = () => {
+const ActivateAccount = ({ isNormalFlow, email }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { isNormalFlow, email } = router.query;
-
-  const initialValues = isNormalFlow ? {
-    otp: '',
-  } : {
-    otp: '',
-    password: '',
-    confirmPassword: '',
-  };
-
-  const validationSchema = isNormalFlow ? Yup.object({
-    otp: Yup.string()
-      .required('OTP field cannot be empty.'),
-  }) : Yup.object({
-    otp: Yup.string()
-      .required('OTP field cannot be empty.'),
-    password: Yup.string()
-      .min(6, 'Minimum length is 6')
-      .required('Password cannot be empty'),
-    confirmPassword: Yup.string()
-      .required('Confirm password cannot be empty')
-      .oneOf([Yup.ref('password')], 'Doesn\'t match the password.'),
-  });
 
   const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (value) => {
+    initialValues: isNormalFlow ? {
+      otp: '',
+    } : {
+      otp: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: isNormalFlow ? Yup.object({
+      otp: Yup.string()
+        .required('OTP field cannot be empty.'),
+    }) : Yup.object({
+      otp: Yup.string()
+        .required('OTP field cannot be empty.'),
+      password: Yup.string()
+        .min(6, 'Minimum length is 6')
+        .required('Password cannot be empty'),
+      confirmPassword: Yup.string()
+        .required('Confirm password cannot be empty')
+        .oneOf([Yup.ref('password')], 'Doesn\'t match the password.'),
+    }),
+    onSubmit: async (values) => {
       setIsLoading(true);
-      axios.post(API_HOST + API_END_POINT.CHECK_OTP, {
-        otp: value.otp,
-        password: value.password,
+      const payload = isNormalFlow ? {
         email,
-      })
+        otp: values.otp,
+      } : {
+        email,
+        otp: values.otp,
+        password: values.password,
+      };
+      axios.post(API_HOST + API_END_POINT.CHECK_OTP, payload)
         .then((res) => {
           const { message } = res.data;
-          toast.success(message.msgBody);
+          toast.success(message?.msgBody);
           router.push('/');
         })
         .catch((error) => {
-          const { data } = error.response;
-          toast.error(data.message.msgBody ? data.message.msgBody : 'Activate failed, please try again later');
+          const { data } = error?.response;
+          toast.error(data.message?.msgBody ? data.message.msgBody : 'Activate failed, please try again later');
         })
         .finally(() => setIsLoading(false));
     },
@@ -80,23 +79,53 @@ const ActivateAccount = () => {
     </>
   );
 
+  const resendOTP = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    axios.post(API_HOST + API_END_POINT.RESEND_OTP, {
+      email,
+      resetAccount: false,
+    })
+      .then((res) => {
+        const { message } = res.data;
+        toast.success(message.msgBody);
+      })
+      .catch((error) => {
+        const { data } = error.response;
+        toast.error(data.message.msgBody ? data.message.msgBody : 'Activate failed, please try again later');
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <Container className={css.container}>
       <Card className={css.card}>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <CardTitle>
-              Your account need activation. Please check your email and use the OTP we sent!
+              <b>Your account need activation. Please check your email and use the OTP we sent!</b>
             </CardTitle>
-            <Input type="number" placeholder="otp" id="otp" name="otp" onChange={formik.handleChange} value={formik.values.otp} />
+            <CardTitle>
+              OTP code:
+            </CardTitle>
+            <Input type="number" id="otp" name="otp" onChange={formik.handleChange} value={formik.values.otp} />
             {formik.errors.otp && <Label className={css.error}>{`* ${formik.errors.otp}`}</Label>}
           </FormGroup>
           {renderPasswordFields}
           <Button color="success" type="submit" className={css.submit}>{isLoading ? <Spinner /> : 'OK'}</Button>
+          <Label className={css.create}>
+            Email not arrived?
+            <a className={css.link} href="#" onClick={resendOTP}> Resend email</a>
+          </Label>
         </form>
       </Card>
     </Container>
   );
 };
+
+ActivateAccount.getInitialProps = async ({ query: { email, isNormalFlow } }) => ({
+  email,
+  isNormalFlow,
+});
 
 export default ActivateAccount;
