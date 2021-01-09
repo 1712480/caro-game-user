@@ -125,7 +125,7 @@ const ActivateAccount = ({ isNormalFlow, email }) => {
 
 ActivateAccount.getInitialProps = async ({ query: { email, isNormalFlow } }) => ({
   email,
-  isNormalFlow,
+  isNormalFlow: isNormalFlow === 'true',
 });
 
 export default ActivateAccount;
