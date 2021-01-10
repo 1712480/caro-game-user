@@ -11,11 +11,18 @@ import {
 } from 'reactstrap';
 import * as Yup from 'yup';
 
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { API_END_POINT, API_HOST } from '../../../utils/constant';
+import { login } from '../../../redux/userSlice';
+
 import css from '../../index.module.scss';
 
 const ChangeName = (props) => {
   const {
     className,
+    user,
   } = props;
 
   const ctaStyle = {
@@ -28,7 +35,7 @@ const ChangeName = (props) => {
   const buttonStyle = {
     width: '100px',
   };
-
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,25 +47,29 @@ const ChangeName = (props) => {
       newName: Yup.string()
         .required('Name cannot be empty'),
     }),
-    // onSubmit: async (value, { setErrors }) => {
-    // setIsLoading(true);
-    // axios.post(API_HOST + 'change name end point', {
-    //   newName: value.newName,
-    //   token: ,
-    // })
-    //   .then((res) => {
-    //     }
-    //   })
-    //   .catch(() => {
-    //   })
-    //   .finally(() => setIsLoading(false));
-    // },
-    onSubmit: () => {
+    onSubmit: async (value) => {
       setIsLoading(true);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      axios.post(API_HOST + API_END_POINT.CHANGE_NAME, {
+        fullName: value.newName,
+      }, {
+        headers: {
+          access_token: user?.access_token,
+        },
+      })
+        .then((res) => {
+          toast.success(res.data?.message?.msgBody);
+          dispatch(login({
+            ...user,
+            user: {
+              ...user.user,
+              fullName: value.newName,
+            },
+          }));
+          // eslint-disable-next-line no-use-before-define
+          toggle();
+        })
+        .catch(() => toast.error('Updated fail, please try again later!'))
+        .finally(() => setIsLoading(false));
     },
     validateOnChange: false,
   });
