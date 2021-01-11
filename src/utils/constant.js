@@ -8,6 +8,7 @@ export const API_END_POINT = {
   CHECK_OTP: 'users/check-otp',
   RESEND_OTP: 'users/resend-otp',
   CHANGE_NAME: 'users/info/fullname',
+  MY_HISTORY: 'matches/my',
 };
 
 export const maxLength = 15;
@@ -24,6 +25,6 @@ export const ROUTE = {
 
 export const GOOGLE_CLIENT_ID = '826449134729-2qc7bpdrf0htl70mf0ovbfh1cedav52k.apps.googleusercontent.com';
 
-export const SECURED_PATH = [ROUTE.HOME, ROUTE.MATCH, ROUTE.HISTORY, ROUTE.HISTORY_ID];
+export const SECURED_PATH = [ROUTE.HOME, ROUTE.MATCH, ROUTE.HISTORY, ROUTE.HISTORY_ID, ROUTE.USER];
 
 export const AVATAR_LOCATION = 'caro';

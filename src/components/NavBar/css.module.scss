@@ -8,31 +8,37 @@
     font-size: 25px;
 
     &:hover {
-      color: white;
       border-bottom: 0;
       outline: 0;
       text-decoration: none;
+      color: #aca9a9;
     }
   }
-}
 
-.dropdown {
-  list-style: none;
-
-  .toggle {
+  .signUp {
     font-size: 20px;
   }
 
-  .avatar {
-    width: 40px;
-  }
+  .dropdown {
+    list-style: none;
+    border-radius: 10px;
 
-  .link {
-    color: black;
-    cursor: pointer;
+    .toggle {
+      font-size: 20px;
+    }
 
-    &:hover {
-      color: black;
+    .avatar {
+      width: 40px;
+    }
+
+    .item {
+      font-size: 15px;
+      color: #000000;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #d0d0d0;
+      }
     }
   }
 }
