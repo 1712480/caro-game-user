@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
+import { selectUser } from '../../../redux/userSlice';
 
 const RenderBoard = (data, socket, roomId) => {
-  socket.emit('moves', roomId);
+  const [currentUser] = useState(useSelector(selectUser));
+
+  socket.emit('moves', { roomId, userReload: currentUser?.user.email });
 
   socket.on(`server-response-moves-${roomId}`, () => {
 
