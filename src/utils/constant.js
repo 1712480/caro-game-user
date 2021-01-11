@@ -20,6 +20,8 @@ export const ROUTE = {
   SIGN_UP: '/sign-up',
   HISTORY: '/history',
   HISTORY_ID: '/history/[id]',
+  ACTIVATE_ACCOUNT: '/activate-account',
+  FORGOT_PASSWORD: '/forgot-password',
 };
 
 export const GOOGLE_CLIENT_ID = '826449134729-2qc7bpdrf0htl70mf0ovbfh1cedav52k.apps.googleusercontent.com';
