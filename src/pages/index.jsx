@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from 'react-google-login';
 import { Card, CardTitle, CardBody, Form, FormGroup, Label, Input, Button, Spinner } from 'reactstrap';
-import { login, selectUser } from '../redux/userSlice';
 
-import { API_END_POINT, API_HOST, GOOGLE_CLIENT_ID } from '../utils/constant';
+import { login, selectUser } from '../redux/userSlice';
+import { API_END_POINT, API_HOST, GOOGLE_CLIENT_ID, ROUTE } from '../utils/constant';
 import css from './index.module.scss';
 
 const Login = () => {
@@ -22,14 +21,14 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      router.push('/home');
+      router.push(ROUTE.HOME);
     }
   }, [router, user]);
 
   const loginSuccess = (data) => {
     dispatch(login(data));
     toast.success('Login success!');
-    return router.push('/home');
+    return router.push(ROUTE.HOME);
   };
 
   const googleLoginSuccess = (response) => {
@@ -46,7 +45,7 @@ const Login = () => {
           loginSuccess(res.data);
         } else if (res.status === 201) {
           router.push({
-            pathname: '/activate-account',
+            pathname: ROUTE.ACTIVATE_ACCOUNT,
             query: {
               email,
             },
@@ -85,8 +84,18 @@ const Login = () => {
             loginSuccess(res.data);
           }
         })
-        .catch(() => {
-          setErrors({ password: 'Invalid email or password.' });
+        .catch((e) => {
+          if (e?.response?.status === 501) {
+            router.push({
+              pathname: ROUTE.ACTIVATE_ACCOUNT,
+              query: {
+                email: value.email,
+                isNormalFlow: true,
+              },
+            });
+          } else {
+            setErrors({ password: 'Invalid email or password.' });
+          }
         })
         .finally(() => setIsLoading(false));
     },
@@ -128,10 +137,10 @@ const Login = () => {
         <hr />
         <Label className={css.create}>
           Create a new account?
-          <Link className={css.link} href="/sign-up"> Sign up</Link>
+          <Link className={css.link} href={ROUTE.SIGN_UP}> Sign up</Link>
         </Label>
         <Label className={css.create}>
-          <Link className={css.link} href="/forgot-password">Forgot your password?</Link>
+          <Link className={css.link} href={ROUTE.FORGOT_PASSWORD}>Forgot your password?</Link>
         </Label>
       </CardBody>
     </Card>
