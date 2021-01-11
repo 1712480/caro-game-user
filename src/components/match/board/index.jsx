@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
 
 const RenderBoard = (data, socket, roomId) => {
-  socket.emit('moves', roomId);
-
-  socket.on(`server-response-moves-${roomId}`, () => {
-
+  const user = useSelector((state) => state.currentUser);
+  useEffect(() => {
+    socket.emit('moves', { ...roomId, reLoader: user });
   });
+
+  useEffect(() => {
+    socket.on(`server-response-moves-${roomId}`, () => {
+      // console.log(res);
+    });
+  }, []);
 
   const Component = data.map((record, indexX) => {
     const recordI = record.map((sq, indexY) => (
