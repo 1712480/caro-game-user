@@ -8,6 +8,7 @@ export const API_END_POINT = {
   CHECK_OTP: 'users/check-otp',
   RESEND_OTP: 'users/resend-otp',
   CHANGE_NAME: 'users/info/fullname',
+  USER_STATS: 'users/info/stats',
 };
 
 export const maxLength = 15;
