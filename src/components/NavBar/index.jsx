@@ -2,12 +2,12 @@ import React from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import { Navbar as Nav, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-import { Navbar as Nav, NavLink } from 'reactstrap';
+import { Image } from 'cloudinary-react';
 import { useAuth } from '../AuthProvider/index';
-
+import { AVATAR_LOCATION, ROUTE } from '../../utils/constant';
 import { selectUser, logout } from '../../redux/userSlice';
-
 import css from './css.module.scss';
 
 const NavBar = (props) => {
@@ -21,18 +21,38 @@ const NavBar = (props) => {
     if (user) {
       socket.emit('client-logout', user);
       dispatch(logout());
-      await Router.push('/');
+      await Router.push(ROUTE.LOGIN);
     } else {
-      await Router.push('/sign-up');
+      await Router.push(ROUTE.SIGN_UP);
     }
   };
 
   return (
     <Nav className={css.nav}>
-      <Link className={css.link} href="/home">CARO</Link>
-      <NavLink className={css.link} style={{ fontSize: 15 }} onClick={handleCta}>
-        {ctaTitle}
-      </NavLink>
+      <Link className={css.link} href={ROUTE.HOME}>CARO</Link>
+      <UncontrolledDropdown className={css.dropdown} nav inNavbar>
+        <DropdownToggle className={css.toggle} nav caret>
+          <Image className={css.avatar} alt="avatar" publicId={`${AVATAR_LOCATION}/default`} />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem>
+            <NavLink className={css.link} href={ROUTE.USER}>
+              {`${user?.user?.fullName}`}
+            </NavLink>
+          </DropdownItem>
+          <DropdownItem>
+            <NavLink className={css.link} href={ROUTE.HISTORY}>
+              History
+            </NavLink>
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>
+            <NavLink className={css.link} onClick={handleCta}>
+              {ctaTitle}
+            </NavLink>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
     </Nav>
   );
 };

@@ -19,13 +19,11 @@ export const ROUTE = {
   SIGN_UP: '/sign-up',
   HISTORY: '/history',
   HISTORY_ID: '/history/[id]',
+  USER: '/user',
 };
 
 export const GOOGLE_CLIENT_ID = '826449134729-2qc7bpdrf0htl70mf0ovbfh1cedav52k.apps.googleusercontent.com';
 
-export const USER_ROLE = {
-  NORMAL_USER: 1,
-  ADMIN: 2,
-};
-
 export const SECURED_PATH = [ROUTE.HOME, ROUTE.MATCH, ROUTE.HISTORY, ROUTE.HISTORY_ID];
+
+export const AVATAR_LOCATION = 'caro';
