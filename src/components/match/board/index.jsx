@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
 import { selectUser } from '../../../redux/userSlice';
+import { setTurn, reLoadGame, exeMove } from '../../../redux/currentMatch';
 
 const RenderBoard = (data, socket, roomId) => {
   const [currentUser] = useState(useSelector(selectUser));
+  const dispatch = useDispatch();
 
-  socket.emit('moves', { roomId, userReload: currentUser?.user.email });
+  useEffect(() => {
+    socket.emit('moves', { roomId, userReload: currentUser?.user.email });
+  }, [roomId]);
 
-  socket.on(`server-response-moves-${roomId}`, (response) => {
-    if (currentUser?.user.email === response.userReload) {
-      // Response chứa ai refresh userReload và roomDetail: thông tin room.
-    }
+  useEffect(() => {
+    socket.on(`server-response-moves-${roomId}`, (response) => {
+      if (currentUser?.user.email === response.userReload) {
+        dispatch(reLoadGame(response));
+        const { length } = response?.roomDetail?.moves;
+        if (length > 0) {
+          const { mover } = response?.roomDetail?.moves[length - 1];
+          const isTurn = mover !== currentUser?.user.email;
+          dispatch(setTurn(isTurn));
+          for (let i = 0; i < length; i += 1) {
+            dispatch(exeMove({
+              x: response?.roomDetail.moves[i].move.x,
+              y: response?.roomDetail.moves[i].move.y,
+            }));
+          }
+          dispatch(setTurn(isTurn));
+        }
+      }
+    });
   });
 
   const Component = data.map((record, indexX) => {

@@ -73,9 +73,24 @@ export const currentMatchSlice = createSlice({
       ...init,
       isTurnX: action.payload,
     }),
+    reLoadGame: (state, action) => ({
+      ...state,
+      userPlaying: {
+        host: action.payload?.roomDetail?.x,
+        competitor: action.payload?.roomDetail?.y,
+      },
+      matchId: action.payload.roomDetail.currentMatch,
+      roomId: action.payload.roomDetail.roomId,
+    }),
+    setTurn: (state, action) => ({
+      ...state,
+      isTurnX: action.payload,
+    }),
   },
 });
 
-export const { exeMove, newGame, restartGame, startGame, refreshGame } = currentMatchSlice.actions;
+export const {
+  exeMove, newGame, restartGame, startGame, reLoadGame, setTurn,
+} = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;

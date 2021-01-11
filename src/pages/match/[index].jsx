@@ -19,6 +19,7 @@ const Match = (props) => {
   const [host, setHost] = useState(null);
   const myTurn = useSelector((state) => state.match.isTurnX);
   const isEndGame = useSelector((state) => state.match.isEndGame);
+  const userPlaying = useSelector((state) => state.match.userPlaying);
   const param = useRouter();
   const dispatch = useDispatch();
 
@@ -26,7 +27,19 @@ const Match = (props) => {
     if (isEndGame) {
       socket.emit('end-game', { roomId, matchId, myTurn, currentUser });
     }
-  }, [isEndGame]);
+  }, [isEndGame, matchId], roomId, myTurn, currentUser);
+
+  useEffect(() => {
+    if (userPlaying.host !== null) {
+      if (userPlaying?.host?.username === currentUser.user.email) {
+        setCompetitor(userPlaying.competitor);
+        setHost(userPlaying.host);
+      } else {
+        setCompetitor(userPlaying.host);
+        setHost(userPlaying.competitor);
+      }
+    }
+  }, [userPlaying]);
 
   useEffect(() => {
     if (currentUser != null) {
@@ -37,13 +50,6 @@ const Match = (props) => {
         const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
         const action = startGame({ ...response, myTurn: isMyTurn });
         dispatch(action);
-        if (response.roomDetails.x.username === currentUser.user.email) {
-          setCompetitor(response.roomDetails.y);
-          setHost(response.roomDetails.x);
-        } else {
-          setCompetitor(response.roomDetails.x);
-          setHost(response.roomDetails.y);
-        }
       });
 
       socket.on(`server-resp-move-${param.query.index}`, (response) => {
@@ -58,13 +64,13 @@ const Match = (props) => {
       const action = restartGame(false);
       dispatch(action);
     };
-  }, [currentUser, dispatch, param.query.index, socket]);
+  }, [currentUser, dispatch, param.query.index, socket, currentUser.user.email]);
 
   return (
     <div className={styles.matchWrapper}>
       <div className={styles.userPlaying}>
         <UserPlaying isCurrentUser myTurn={myTurn} name={host?.fullName} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
-        <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor.fullName : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
+        <UserPlaying myTurn={!myTurn} name={competitor !== null ? competitor?.fullName : 'Waiting...'} img="https://res.cloudinary.com/kh-ng/image/upload/v1607835120/caro/unnamed_rwk6xo.png" />
       </div>
       <Board socket={socket} roomId={param.query.index} />
       <div className={styles.chat}>
