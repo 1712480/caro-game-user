@@ -9,8 +9,10 @@ const RenderBoard = (data, socket, roomId) => {
 
   socket.emit('moves', { roomId, userReload: currentUser?.user.email });
 
-  socket.on(`server-response-moves-${roomId}`, () => {
-
+  socket.on(`server-response-moves-${roomId}`, (response) => {
+    if (currentUser?.user.email === response.userReload) {
+      // Response chứa ai refresh userReload và roomDetail: thông tin room.
+    }
   });
 
   const Component = data.map((record, indexX) => {
