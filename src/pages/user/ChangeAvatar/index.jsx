@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-
 import { Image } from 'cloudinary-react';
+
 import {
   Modal,
   ModalBody,
   ModalHeader,
 } from 'reactstrap';
-import { selectUser } from '../../../redux/userSlice';
+import { AVATAR_LOCATION } from '../../../utils/constant';
 import css from '../css.module.scss';
 
 const ChangeAvatar = (props) => {
@@ -20,7 +19,6 @@ const ChangeAvatar = (props) => {
     // send file to server
   };
 
-  const currentUser = useSelector(selectUser);
   const [modal, setModal] = useState(false);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -30,7 +28,7 @@ const ChangeAvatar = (props) => {
 
   return (
     <>
-      <Image alt="avatar" publicId={`${currentUser?.user.email}`} onClick={toggle} />
+      <Image alt="avatar" publicId={`${AVATAR_LOCATION}/default`} onClick={toggle} />
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Change name</ModalHeader>
         <ModalBody>
