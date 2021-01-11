@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Square from '../square';
 import styles from './styles.module.scss';
+import { selectUser } from '../../../redux/userSlice';
 
 const RenderBoard = (data, socket, roomId) => {
-  const user = useSelector((state) => state.currentUser);
-  useEffect(() => {
-    socket.emit('moves', { ...roomId, reLoader: user });
-  });
+  const [currentUser] = useState(useSelector(selectUser));
 
-  useEffect(() => {
-    socket.on(`server-response-moves-${roomId}`, () => {
-      // console.log(res);
-    });
-  }, []);
+  socket.emit('moves', { roomId, userReload: currentUser?.user.email });
+
+  socket.on(`server-response-moves-${roomId}`, (response) => {
+    if (currentUser?.user.email === response.userReload) {
+      // Response chứa ai refresh userReload và roomDetail: thông tin room.
+    }
+  });
 
   const Component = data.map((record, indexX) => {
     const recordI = record.map((sq, indexY) => (
