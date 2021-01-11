@@ -20,6 +20,8 @@ export const ROUTE = {
   SIGN_UP: '/sign-up',
   HISTORY: '/history',
   HISTORY_ID: '/history/[id]',
+  ACTIVATE_ACCOUNT: '/activate-account',
+  FORGOT_PASSWORD: '/forgot-password',
   USER: '/user',
 };
 

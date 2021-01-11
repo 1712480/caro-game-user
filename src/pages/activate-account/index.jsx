@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Container, Card, CardTitle, Input, Button, FormGroup, Spinner, Label } from 'reactstrap';
 import { useRouter } from 'next/router';
-
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { API_END_POINT, API_HOST } from '../../utils/constant';
 
+import { API_END_POINT, API_HOST } from '../../utils/constant';
 import css from './style.module.scss';
 
 const ActivateAccount = ({ isNormalFlow, email }) => {
