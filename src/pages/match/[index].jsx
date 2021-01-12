@@ -30,8 +30,8 @@ const Match = (props) => {
   }, [isEndGame, matchId], roomId, myTurn, currentUser);
 
   useEffect(() => {
-    if (userPlaying.host !== null) {
-      if (userPlaying?.host?.username === currentUser.user.email) {
+    if (userPlaying.host !== null && currentUser !== null) {
+      if (userPlaying?.host?.username === currentUser?.user.email) {
         setCompetitor(userPlaying.competitor);
         setHost(userPlaying.host);
       } else {
