@@ -47,13 +47,13 @@ const Match = (props) => {
         socket.emit('request-start-game', response);
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
-        const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
+        const isMyTurn = response.roomDetails.y.username !== currentUser?.user.email;
         const action = startGame({ ...response, myTurn: isMyTurn });
         dispatch(action);
       });
 
       socket.on(`server-resp-move-${param.query.index}`, (response) => {
-        if (response.player !== currentUser.user.email) {
+        if (response.player !== currentUser?.user.email) {
           const action = exeMove({ x: response.move.x, y: response.move.y });
           dispatch(action);
         }
@@ -64,7 +64,7 @@ const Match = (props) => {
       const action = restartGame(false);
       dispatch(action);
     };
-  }, [currentUser, dispatch, param.query.index, socket, currentUser.user.email]);
+  }, [currentUser, dispatch, param.query.index, socket, currentUser?.user.email]);
 
   return (
     <div className={styles.matchWrapper}>
