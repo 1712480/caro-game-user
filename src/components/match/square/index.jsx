@@ -20,7 +20,9 @@ function Square({ x, y, value, socket, roomId }) {
         && currentUser.user.email !== userPlaying.competitor?.username) {
         return;
       }
-      socket.emit('client-make-move', { player: currentUser.user.email, move: { x, y }, roomId, matchId });
+      socket.emit('client-make-move', {
+        player: currentUser.user.email, move: { x, y }, roomId, matchId,
+      });
       const action = exeMove({ x, y });
       dispatch(action);
     }
