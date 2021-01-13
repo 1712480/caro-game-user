@@ -41,11 +41,6 @@ const Home = (props) => {
     setRooms(response);
   });
 
-  // When current user create room
-  socket.on('created-room', (response) => {
-    router.push(`/match/${response.roomId}`);
-  });
-
   const createNewRoom = () => {
     const { user } = currentUser;
     const name = user.fullName ? user.fullName : user.email;
@@ -63,6 +58,7 @@ const Home = (props) => {
     };
 
     socket.emit('create-room', newRoom);
+    router.push(`/match/${newRoom.roomId}`);
   };
 
   const renderCardList = rooms && rooms.map((room) => (
@@ -77,7 +73,7 @@ const Home = (props) => {
           <div>Create Room</div>
         </Card>
         <CreateSecretRoom socket={socket} />
-        <QuickPlay />
+        <QuickPlay socket={socket} createNewRoom={createNewRoom} />
         <PlayWithRoomID socket={socket} />
         {renderCardList}
       </Container>
