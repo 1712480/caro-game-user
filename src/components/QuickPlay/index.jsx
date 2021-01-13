@@ -51,8 +51,8 @@ const QuickPlay = ({ socket, createNewRoom }) => {
   }, []);
 
   return (
-    <div>
-      <Card className={css.plus} onClick={quickPlay} style={{ backgroundColor: 'yellow' }}>
+    <>
+      <Card className={css.plus} onClick={quickPlay}>
         <img src="/search.svg" alt="lock" />
         <div>Quick play</div>
       </Card>
@@ -62,7 +62,7 @@ const QuickPlay = ({ socket, createNewRoom }) => {
           <Button style={{ width: '100%' }} onClick={closeModal}>Cancel</Button>
         </ModalBody>
       </Modal>
-    </div>
+    </>
   );
 };
 
