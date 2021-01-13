@@ -10,7 +10,9 @@ import {
   ModalBody,
 } from 'reactstrap';
 
+import { useSelector } from 'react-redux';
 import css from './css.module.scss';
+import { selectUser } from '../../redux/userSlice';
 
 const OnlineUser = (props) => {
   const {
@@ -18,11 +20,11 @@ const OnlineUser = (props) => {
   } = props;
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [modal, setModal] = useState(false);
+  const [currentUser] = useState(useSelector(selectUser));
 
   const toggle = () => setModal(!modal);
 
   socket.on('online-users', (response) => {
-    // Should exclude myself here
     setOnlineUsers(response);
   });
 
@@ -33,11 +35,19 @@ const OnlineUser = (props) => {
         <Card>
           <ListGroup>
             {
-              onlineUsers.map((item) => (
-                <ListGroupItem key={item.email} onClick={() => { toggle(); }}>
-                  {item.fullName || item.email}
-                </ListGroupItem>
-              ))
+              onlineUsers.map((item) => {
+                const disabled = currentUser?.user.email === item?.email;
+                return (
+                  <ListGroupItem
+                    disabled={disabled}
+                    className={css.item}
+                    key={item?.email}
+                    onClick={() => toggle(item?.email)}
+                  >
+                    {item.fullName || item.email}
+                  </ListGroupItem>
+                );
+              })
             }
           </ListGroup>
         </Card>

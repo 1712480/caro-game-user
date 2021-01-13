@@ -9,10 +9,10 @@ import OnlineUser from '../../components/OnlineUser';
 import MatchCard from '../../components/MatchCard';
 import { useAuth } from '../../components/AuthProvider';
 
-import css from './css.module.scss';
 import CreateSecretRoom from '../../components/CreateSecretRoom';
 import QuickPlay from '../../components/QuickPlay';
 import PlayWithRoomID from '../../components/PlayWithRoomId';
+import css from './css.module.scss';
 
 const Home = (props) => {
   const { socket } = props;
@@ -72,7 +72,7 @@ const Home = (props) => {
   return (
     <Container className={css.container}>
       <Container className={css.grid}>
-        <Card className={css.plus} onClick={createNewRoom} style={{ backgroundColor: 'red' }}>
+        <Card className={css.plus} onClick={createNewRoom}>
           <img src="/plus.svg" alt="plus" />
           <div>Create Room</div>
         </Card>

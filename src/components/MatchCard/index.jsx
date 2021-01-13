@@ -58,7 +58,7 @@ const MatchCard = ({ roomId, roomName, x, y, password, socket }) => {
       </Card>
       <Modal isOpen={modal} fade={false} toggle={toggle}>
         <ModalBody style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-          <Input value={inputPassword} onChange={changeInputPassword} />
+          <Input type="password" value={inputPassword} onChange={changeInputPassword} />
         </ModalBody>
 
         <ModalFooter className={css.footerModal}>

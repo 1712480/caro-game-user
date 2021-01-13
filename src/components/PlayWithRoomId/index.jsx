@@ -24,8 +24,8 @@ const PlayWithRoomID = ({ socket }) => {
   };
 
   return (
-    <div>
-      <Card className={css.plus} onClick={toggle} style={{ backgroundColor: 'blue' }}>
+    <>
+      <Card className={css.plus} onClick={toggle}>
         <img src="/console.svg" alt="lock" />
         <div>Play with room Id</div>
       </Card>
@@ -38,7 +38,7 @@ const PlayWithRoomID = ({ socket }) => {
           </form>
         </ModalBody>
       </Modal>
-    </div>
+    </>
   );
 };
 

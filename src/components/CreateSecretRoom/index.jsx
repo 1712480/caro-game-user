@@ -38,8 +38,8 @@ const CreateSecretRoom = ({ socket }) => {
   };
 
   return (
-    <div>
-      <Card className={css.plus} onClick={toggle} style={{ backgroundColor: 'green' }}>
+    <>
+      <Card className={css.plus} onClick={toggle}>
         <img src="/padlock.svg" alt="lock" />
         <div>Create Secret Room</div>
       </Card>
@@ -47,14 +47,14 @@ const CreateSecretRoom = ({ socket }) => {
         <ModalHeader toggle={toggle}>Secret Room</ModalHeader>
         <ModalBody>
           <form>
-            <Input onChange={changePassword} />
+            <Input type="password" onChange={changePassword} />
           </form>
         </ModalBody>
         <ModalFooter>
           <Button color="info" style={{ width: '100%' }} onClick={createNewRoom}>Create</Button>
         </ModalFooter>
       </Modal>
-    </div>
+    </>
   );
 };
 

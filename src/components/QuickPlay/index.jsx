@@ -10,8 +10,8 @@ const QuickPlay = () => {
   const closeModal = () => setModal(false);
 
   return (
-    <div>
-      <Card className={css.plus} onClick={toggle} style={{ backgroundColor: 'yellow' }}>
+    <>
+      <Card className={css.plus} onClick={toggle}>
         <img src="/search.svg" alt="lock" />
         <div>Quick play</div>
       </Card>
@@ -21,7 +21,7 @@ const QuickPlay = () => {
           <Button style={{ width: '100%' }} onClick={closeModal}>Cancel</Button>
         </ModalBody>
       </Modal>
-    </div>
+    </>
   );
 };
 
