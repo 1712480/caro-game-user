@@ -53,7 +53,7 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        toast.error(err.message || 'Something occurred, please try again later!');
+        toast.error(err?.response?.data?.message?.msgBody || 'Something occurred, please try again later!');
       })
       .finally(() => setIsLoading(false));
   };
@@ -86,13 +86,17 @@ const Login = () => {
         })
         .catch((e) => {
           if (e?.response?.status === 501) {
-            router.push({
-              pathname: ROUTE.ACTIVATE_ACCOUNT,
-              query: {
-                email: value.email,
-                isNormalFlow: true,
-              },
-            });
+            if (e.response.data.message.msgBody === 'User has been blocked by admin!') {
+              toast.error(e.response.data.message.msgBody);
+            } else {
+              router.push({
+                pathname: ROUTE.ACTIVATE_ACCOUNT,
+                query: {
+                  email: value.email,
+                  isNormalFlow: true,
+                },
+              });
+            }
           } else {
             setErrors({ password: 'Invalid email or password.' });
           }
