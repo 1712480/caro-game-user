@@ -27,6 +27,7 @@ const Match = (props) => {
     if (isEndGame) {
       socket.emit('end-game', { roomId, matchId, myTurn, currentUser });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEndGame]);
 
   useEffect(() => {
@@ -59,7 +60,6 @@ const Match = (props) => {
       const { exitUser } = response;
       if (currentUser?.user?.email !== exitUser) {
         router.push('/home');
-        toast.error('Your opponent has left the room!');
       }
     });
 
@@ -68,7 +68,23 @@ const Match = (props) => {
       dispatch(action);
       socket.emit('exit-room', { roomId: router.query.index, exitUser: currentUser?.user?.email });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, dispatch, router.query.index, socket]);
+
+  const handleCopyRoomId = (e) => {
+    e.preventDefault();
+    if (window) {
+      const el = document.createElement('textarea');
+      el.value = router.query.index;
+      el.style.visibility = 'none';
+      document.body.appendChild(el);
+      el.select();
+      el.focus();
+      document.execCommand('copy');
+      el.remove();
+      toast.success('Room ID is copied to clipboard.');
+    }
+  };
 
   return (
     <div className={styles.matchWrapper}>
@@ -81,7 +97,11 @@ const Match = (props) => {
         <Chat socket={socket} roomId={router.query.index} />
       </div>
       <EndGame socket={socket} roomId={router.query.index} />
-      <Button style={{ position: 'fixed', top: 100, left: 50 }} color="warning">Start</Button>
+      <Button className={styles.button} color="warning" onClick={handleCopyRoomId}>
+        <img src="/copy.svg" alt="copy" />
+        {' '}
+        Room ID
+      </Button>
     </div>
   );
 };
