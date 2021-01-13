@@ -72,9 +72,13 @@ export const currentMatchSlice = createSlice({
       ...init,
       isTurnX: action.payload,
     }),
+    createRoom: (state, action) => ({
+      ...init,
+      roomId: action.payload,
+    }),
   },
 });
 
-export const { exeMove, newGame, restartGame, startGame } = currentMatchSlice.actions;
+export const { exeMove, newGame, restartGame, startGame, createRoom } = currentMatchSlice.actions;
 
 export default currentMatchSlice.reducer;
