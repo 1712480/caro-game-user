@@ -30,7 +30,7 @@ const Match = (props) => {
 
   useEffect(() => {
     if (currentUser != null) {
-      socket.on('player-join-game', (response) => {
+      socket.on(`player-join-game-${param.query.index}`, (response) => {
         socket.emit('request-start-game', response);
       });
       socket.on(`start-game-${param.query.index}`, (response) => {
