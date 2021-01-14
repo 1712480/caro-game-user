@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Container, Card, Spinner } from 'reactstrap';
 
@@ -8,6 +8,7 @@ import { selectUser } from '../../redux/userSlice';
 import OnlineUser from '../../components/OnlineUser';
 import MatchCard from '../../components/MatchCard';
 import { useAuth } from '../../components/AuthProvider';
+import { createRoom } from '../../redux/currentMatch';
 
 import CreateSecretRoom from '../../components/CreateSecretRoom';
 import QuickPlay from '../../components/QuickPlay';
@@ -19,6 +20,7 @@ const Home = (props) => {
   const [currentUser] = useState(useSelector(selectUser));
   const [rooms, setRooms] = useState([]);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.emit('client-login', currentUser);
@@ -58,6 +60,7 @@ const Home = (props) => {
     };
 
     socket.emit('create-room', newRoom);
+    dispatch(createRoom(roomID));
     router.push(`/match/${newRoom.roomId}`);
   };
 
