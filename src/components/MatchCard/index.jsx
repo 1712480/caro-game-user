@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Card, CardTitle, Input, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardTitle,
+  Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from 'reactstrap';
 
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -40,7 +49,7 @@ const MatchCard = ({ roomId, roomName, x, y, password, socket }) => {
 
   return (
     <>
-      <Card className={css.card} onClick={handleGoToRoom}>
+      <Card id={roomId} className={css.card} onClick={handleGoToRoom}>
         <CardTitle className={css.title}>
           {roomName || roomId}
         </CardTitle>
@@ -56,7 +65,8 @@ const MatchCard = ({ roomId, roomName, x, y, password, socket }) => {
           {password ? <img src="/padlock.svg" alt="" /> : null}
         </div>
       </Card>
-      <Modal isOpen={modal} fade={false} toggle={toggle}>
+      <Modal isOpen={modal} fade toggle={toggle}>
+        <ModalHeader>Room password</ModalHeader>
         <ModalBody style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
           <Input type="password" value={inputPassword} onChange={changeInputPassword} />
         </ModalBody>

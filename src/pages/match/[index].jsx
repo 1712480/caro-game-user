@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 import EndGame from '../../components/match/endGame';
 import UserPlaying from '../../components/match/userPlaying';
 import Chat from '../../components/match/chat';
-import { exeMove, restartGame, startGame } from '../../redux/currentMatch';
+import { exeMove, newGame, startGame } from '../../redux/currentMatch';
 import { selectUser } from '../../redux/userSlice';
 
 const Match = (props) => {
@@ -35,6 +35,7 @@ const Match = (props) => {
       socket.on(`player-join-game-${router.query.index}`, (response) => {
         socket.emit('request-start-game', response);
       });
+
       socket.on(`start-game-${router.query.index}`, (response) => {
         const isMyTurn = response.roomDetails.y.username !== currentUser.user.email;
         const action = startGame({ ...response, myTurn: isMyTurn });
@@ -64,12 +65,12 @@ const Match = (props) => {
     });
 
     return () => {
-      const action = restartGame(false);
+      const action = newGame();
       dispatch(action);
       socket.emit('exit-room', { roomId: router.query.index, exitUser: currentUser?.user?.email });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser, dispatch, router.query.index, socket]);
+  }, []);
 
   const handleCopyRoomId = (e) => {
     e.preventDefault();

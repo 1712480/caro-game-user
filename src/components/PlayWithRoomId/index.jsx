@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Modal, ModalHeader, ModalBody, Input, Card, Button } from 'reactstrap';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,7 +8,6 @@ import { selectUser } from '../../redux/userSlice';
 const PlayWithRoomID = ({ socket }) => {
   const [modal, setModal] = useState(false);
   const [currentUser] = useState(useSelector(selectUser));
-  const router = useRouter();
 
   const toggle = () => setModal(!modal);
 
@@ -22,8 +20,9 @@ const PlayWithRoomID = ({ socket }) => {
   useEffect(() => {
     socket.on(`server-response-found-room-${currentUser?.user?.email}`, (response) => {
       if (response?.foundRoom !== -1) {
-        socket.emit('joined', { roomId: response.roomId, currentUser });
-        router.push(`/match/${response.roomId}`);
+        const room = document.getElementById(response.roomId);
+        toggle();
+        room.click();
       } else {
         toast.error('RoomID not available!');
       }

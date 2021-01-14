@@ -26,14 +26,16 @@ const QuickPlay = ({ socket, createNewRoom }) => {
 
   useEffect(() => {
     socket.on(`server-response-no-room-${currentUser.access_token}`, () => {
-      setTimeout(() => {
+      const timeOut = setTimeout(() => {
+        clearTimeout(timeOut);
         createNewRoom();
         closeModal();
       }, 2000);
     });
 
     socket.on(`server-response-find-fail-${currentUser.access_token}`, () => {
-      setTimeout(() => {
+      const timeOut = setTimeout(() => {
+        clearTimeout(timeOut);
         if (startScan) {
           socket.emit('quick-play', currentUser);
         }
@@ -42,12 +44,14 @@ const QuickPlay = ({ socket, createNewRoom }) => {
 
     socket.on(`server-response-room-join-${currentUser.access_token}`, (response) => {
       // Join game here
-      setTimeout(() => {
+      const timeOut = setTimeout(() => {
+        clearTimeout(timeOut);
         socket.emit('joined', { roomId: response, currentUser });
         router.push(`/match/${response}`);
         closeModal();
       }, 2000);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
